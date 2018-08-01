@@ -1,0 +1,11 @@
+<div>
+  <div data-ng-if="message">{{ message }}</div>
+  <section class="not-activated" data-ng-if="!activated">
+    <itk-log></itk-log>
+    <h1>Screen activation</h1>
+    <form data-ng-submit="submitActivationCode(activationCode)">
+      <input data-ng-model="activationCode" type="text" placeholder="Activation code" required autofocus>
+      <button type="submit">Activate</button>
+    </form>
+  </section>
+</div>

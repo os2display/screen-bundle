@@ -11,20 +11,17 @@
 (function () {
   'use strict';
 
-  var app;
-  app = angular.module('itkDigitalClockComponent', []);
-
   /**
    * date component directive.
    *
    * html parameters:
    */
-  app.directive('digitalClockComponent', ['$interval',
+  angular.module('ikApp').directive('digitalClockComponent', ['$interval',
     function ($interval) {
       return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'bundles/os2displayscreen/app/shared/components/digital-clock/digital-clock.html?' + window.config.version,
+        templateUrl: 'bundles/os2displayscreen/app/views/digital-clock.html?' + window.config.version,
         scope: {
         },
         link: function (scope) {

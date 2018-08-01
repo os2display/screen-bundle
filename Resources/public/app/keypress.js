@@ -12,10 +12,8 @@
   'use strict';
 
   var modifierPressed = false;
-  var app;
-  app = angular.module("itkKeypress", []);
 
-  app.directive('itkKeypress', function () {
+  angular.module('ikApp').directive('itkKeypress', function () {
     return function (scope, element, attrs) {
       element.bind("keydown keypress", function (event) {
 

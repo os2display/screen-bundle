@@ -1,8 +1,8 @@
 /**
  * Web-socket factory using socket.io to communicate with the middleware.
  */
-angular.module('ikApp').factory('socket', ['$rootScope', 'itkLog',
-    function ($rootScope, itkLog) {
+angular.module('ikApp').factory('socket', ['$rootScope', 'logging',
+    function ($rootScope, logging) {
         'use strict';
 
         var factory = {};
@@ -122,7 +122,7 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'itkLog',
             file.setAttribute('src', config.resource.server + config.resource.uri + '/socket.io/socket.io.js?' + config.version);
             file.onload = function () {
                 if (typeof io === 'undefined') {
-                    itkLog.error('Socket.io not loaded');
+                    logging.error('Socket.io not loaded');
 
                     document.getElementsByTagName('head')[0].removeChild(file);
                     window.setTimeout(loadSocket(callback), 100);
@@ -170,7 +170,7 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'itkLog',
                 // Connection accepted, so lets store the token.
                 storedToken.set(token);
 
-                itkLog.log('Connection to middleware');
+                logging.log('Connection to middleware');
 
                 // If first time we connect change reconnection to true.
                 if (!reconnection) {
@@ -202,31 +202,31 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'itkLog',
              * @TODO: HANDLE ERROR EVENT:
              */
             socket.on('error', function (error) {
-                itkLog.error(error);
+                logging.error(error);
             });
 
             socket.on('disconnect', function () {
-                itkLog.info('disconnect');
+                logging.info('disconnect');
             });
 
             socket.on('reconnect', function () {
-                itkLog.info('reconnect');
+                logging.info('reconnect');
             });
 
             socket.on('reconnect_attempt', function () {
-                itkLog.info('reconnect_attempt');
+                logging.info('reconnect_attempt');
             });
 
             socket.on('connect_error', function () {
-                itkLog.error('connect_error');
+                logging.error('connect_error');
             });
 
             socket.on('reconnect_error', function () {
-                itkLog.error('reconnect_error');
+                logging.error('reconnect_error');
             });
 
             socket.on('reconnect_failed', function () {
-                itkLog.error('reconnect_failed');
+                logging.error('reconnect_failed');
             });
 
             // Ready event - if the server accepted the ready command.
@@ -236,7 +236,7 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'itkLog',
                 if (data.statusCode !== 200) {
                     // Screen not found will reload application on dis-connection event.
                     if (data.statusCode !== 404) {
-                        itkLog.error('Code: ' + data.statusCode + ' - Connection error');
+                        logging.error('Code: ' + data.statusCode + ' - Connection error');
                     }
                 }
                 else {
@@ -329,7 +329,7 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'itkLog',
                         kickXHR.onerror = function (exception) {
                             // There was a connection error of some sort
                             $rootScope.$apply(function () {
-                                itkLog.error('Kick request failed.', exception);
+                                logging.error('Kick request failed.', exception);
                             });
                         };
 
@@ -342,7 +342,7 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'itkLog',
                 else {
                     // We reached our target server, but it returned an error
                     $rootScope.$apply(function () {
-                        itkLog.error(xhr.responseText, xhr);
+                        logging.error(xhr.responseText, xhr);
                     });
                 }
             };
@@ -350,7 +350,7 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'itkLog',
             xhr.onerror = function (exception) {
                 // There was a connection error of some sort
                 $rootScope.$apply(function () {
-                    itkLog.error('Activation request failed.', exception);
+                    logging.error('Activation request failed.', exception);
                 });
             };
 

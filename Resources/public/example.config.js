@@ -23,8 +23,6 @@ window.config = {
   "version": "dev",
   // itkLog configuration.
   "itkLog": {
-    "version": "1",
-    "errorCallback": null,
     "logToConsole": true,
     "logLevel": "all"
   },

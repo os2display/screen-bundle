@@ -5,26 +5,20 @@
  * @TODO: jeskr: why is this code here... what is it used for?
  */
 
-/**
- * Setup the module.
- */
 (function () {
   'use strict';
-
-  var app;
-  app = angular.module('itkDateComponent', []);
 
   /**
    * date component directive.
    *
    * html parameters:
    */
-  app.directive('dateComponent', ['$interval',
+  angular.module('ikApp').directive('dateComponent', ['$interval',
     function ($interval) {
       return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'bundles/os2displayscreen/app/shared/components/date/date.html?' + window.config.version,
+        templateUrl: 'bundles/os2displayscreen/app/views/date.html?' + window.config.version,
         scope: {
           theme: '@'
         },

@@ -8,8 +8,8 @@
  *
  * Sets up the socket connection and displays the activation page if relevant.
  */
-angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '$timeout', 'socket', 'itkLog', 'cssInjector',
-  function ($scope, $rootScope, $timeout, socket, itkLog, cssInjector) {
+angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '$timeout', 'socket', 'logging', 'cssInjector',
+  function ($scope, $rootScope, $timeout, socket, logging, cssInjector) {
     'use strict';
 
     // Initial slide function array to hold custom slide plugins loaded from
@@ -19,7 +19,8 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
     }
 
     // The template to render in the index.html's ng-include.
-    $scope.template = 'bundles/os2displayscreen/app/pages/index/init.html?' + window.config.version;
+    $scope.template = 'bundles/os2displayscreen/app/views/index.html?' + window.config.version;
+    $scope.message = 'Initializing...';
 
     // Is the screen running (has the screen template been loaded?).
     var running = false;
@@ -36,6 +37,16 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
 
     // Saved info about regions
     var regions = [];
+
+    $scope.activated = true;
+    $scope.activationCode = '';
+
+    /**
+     * Submit handler for the activation screen.
+     */
+    $scope.submitActivationCode = function(activationCode) {
+      socket.activateScreenAndConnect(activationCode);
+    };
 
     /**
      * Register to the regionInfo event.
@@ -70,7 +81,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      */
     $rootScope.$on('activationNotComplete', function() {
       $scope.$apply(function () {
-        $scope.template = 'bundles/os2displayscreen/app/pages/notActivated/not-activated.html?' + window.config.version;
+        $scope.activated = false;
       });
     });
 
@@ -81,7 +92,8 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      */
     $rootScope.$on('awaitingContent', function() {
       $scope.$apply(function () {
-        $scope.template = 'bundles/os2displayscreen/app/pages/index/awaiting-content.html?' + window.config.version;
+        $scope.activated = true;
+        $scope.message = 'Awaiting content...';
       });
     });
 
@@ -115,7 +127,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
 
           // Push all stored channels.
           for (var i = 0; i < savedChannelPushes.length; i++) {
-            itkLog.info('Emitting channel saved channel.');
+            logging.info('Emitting channel saved channel.');
             $rootScope.$emit('addChannel', savedChannelPushes[i]);
           }
         }, 5000);
@@ -132,7 +144,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      */
     $rootScope.$on('addChannel', function(event, data) {
       if (!running) {
-        itkLog.info('Saving channel till screen is ready.');
+        logging.info('Saving channel till screen is ready.');
         savedChannelPushes.push(data);
       }
     });

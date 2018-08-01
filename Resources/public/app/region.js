@@ -9,12 +9,12 @@
 (function () {
   'use strict';
 
-  var app = angular.module("itkRegion", []);
+  var app = angular.module('ikApp');
 
   // Create ProgressBar object ot handle the bar.
-  function ProgressBar(scope, itkLog) {
+  function ProgressBar(scope, logging) {
     this.scope = scope;
-    this.itkLog = itkLog;
+    this.logging = logging;
 
     // Used by progress bar
     this.scope.progressBoxElements = 0;
@@ -47,7 +47,7 @@
   ProgressBar.prototype.resetBox = function resetBox() {
     var self = this;
 
-    self.itkLog.info('resetProgressBox');
+    self.logging.info('resetProgressBox');
     self.scope.progressBoxElements = 0;
     self.scope.progressBoxElementsIndex = 0;
 
@@ -95,9 +95,11 @@
 
   // Create region function object and use prototype to extend it to optimize
   // memory usage inside the region directive.
-  function Region(scope, itkLog, progressBar, $timeout, $rootScope, $http, $interval, $sce, $filter) {
+  function Region(scope, logging, progressBar, $timeout, $rootScope, $http, $interval, $sce, $filter) {
     this.scope = scope;
-    this.itkLog = itkLog;
+    this.logging = logging;
+    // Backwards compatibility for slide functions.
+    this.itkLog = logging;
     this.progressBar = progressBar;
     this.$timeout = $timeout;
     this.$rootScope = $rootScope;
@@ -285,7 +287,7 @@
   Region.prototype.restartShow = function restartShow() {
     var self = this;
 
-    self.itkLog.info("Restart show");
+    self.logging.info("Restart show");
 
     // Reset the index keys, they will bed +1 in the nextSlide and nextChannel
     // hence first will be zero indexed.
@@ -401,11 +403,11 @@
     if (!currentSlide.isScheduled) {
       if (self.isContentScheduled()) {
         // There are more slides to be show.
-        self.itkLog.info('Slide schedule: slides remain.');
+        self.logging.info('Slide schedule: slides remain.');
         self.nextSlide();
       }
       else {
-        self.itkLog.info('Slide schedule: slides do not remain');
+        self.logging.info('Slide schedule: slides do not remain');
 
         // Not slides are currently schedule, hence not slides to show. But
         // slides may become scheduled to be displayed later and to ensure that
@@ -464,7 +466,7 @@
     }
     else {
       // Script is not available. Wait 5 seconds and continue to next slide.
-      self.itkLog.info('slideFunction "' + slide.js_script_id + '" not defined. Wait 5 seconds and continue to next slide.');
+      self.logging.info('slideFunction "' + slide.js_script_id + '" not defined. Wait 5 seconds and continue to next slide.');
       self.$timeout(function () {
           self.nextSlide();
       }, 5000);
@@ -488,8 +490,8 @@
    *   region (integer): region id.
    *   show-progress (boolean): should the progress bar/box be displayed?
    */
-  app.directive('region', ['$rootScope', '$timeout', '$interval', 'itkLog', '$http', '$sce', '$filter',
-    function ($rootScope, $timeout, $interval, itkLog, $http, $sce, $filter) {
+  app.directive('region', ['$rootScope', '$timeout', '$interval', 'logging', '$http', '$sce', '$filter',
+    function ($rootScope, $timeout, $interval, logging, $http, $sce, $filter) {
       return {
         restrict: 'E',
         scope: {
@@ -519,8 +521,8 @@
           // @TODO: This could be moved out of scope, but needs to be accessible through the region.
           scope.slidesUpdated = false;
 
-          var progressBar = new ProgressBar(scope, itkLog);
-          var region = new Region(scope, itkLog, progressBar, $timeout, $rootScope, $http, $interval, $sce, $filter);
+          var progressBar = new ProgressBar(scope, logging);
+          var region = new Region(scope, logging, progressBar, $timeout, $rootScope, $http, $interval, $sce, $filter);
 
           // Broadcast 0 slides to get the default splash image display during
           // init.
@@ -544,7 +546,7 @@
               var id = "" + channel.data.id;
 
               if (scope.channels[shadowIndex].hasOwnProperty(id)) {
-                itkLog.info("Removing channel " + channel.data.id + " from region " + scope.regionId);
+                logging.info("Removing channel " + channel.data.id + " from region " + scope.regionId);
 
                 delete scope.channels[shadowIndex][id];
                 scope.channelKeys[shadowIndex] = Object.keys(scope.channels[shadowIndex]);
@@ -554,7 +556,7 @@
               return;
             }
 
-            itkLog.info("Adding channel " + channel.data.id + " to region " + scope.regionId);
+            logging.info("Adding channel " + channel.data.id + " to region " + scope.regionId);
 
             // The show is running simply update the slides.
             if (running) {
@@ -611,7 +613,7 @@
 
             // If the channel is in the array, remove it.
             if (scope.channels[shadowIndex].hasOwnProperty(id)) {
-              itkLog.info("Removing channel " + channel.id + " from region " + scope.regionId + " with shadowIndex: " + shadowIndex);
+              logging.info("Removing channel " + channel.id + " from region " + scope.regionId + " with shadowIndex: " + shadowIndex);
 
               delete scope.channels[shadowIndex][id];
               scope.channelKeys[shadowIndex] = Object.keys(scope.channels[shadowIndex]);
@@ -619,7 +621,7 @@
             }
           });
         },
-        templateUrl: 'bundles/os2displayscreen/app/shared/region/region.html?' + window.config.version
+        templateUrl: 'bundles/os2displayscreen/app/views/region.html?' + window.config.version
       };
     }
   ]);

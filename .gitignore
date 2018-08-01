@@ -2,6 +2,6 @@
 .DS_Store
 *.pid
 .idea
-app/config.js
+config.js
 assets/images/fallback_override.png
-/node_modules/
+Resources/public/node_modules/

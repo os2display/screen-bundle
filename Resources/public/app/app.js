@@ -8,14 +8,7 @@
 angular.module('ikApp', [
     'ngAnimate',
     'ngSanitize',
-    'angular.css.injector',
-
-    'itkLog',
-
-    'itkRegion',
-    'itkDateComponent',
-    'itkDigitalClockComponent',
-    'itkKeypress'
+    'angular.css.injector'
   ]
 ).config(function ($sceDelegateProvider) {
     'use strict';
@@ -38,8 +31,8 @@ angular.module('ikApp', [
       return function (exception, cause) {
         $delegate(exception, cause);
 
-        // Send the error to itkLog.
-        $injector.get('itkLog').error(exception, cause);
+        // Send the error to logging.
+        $injector.get('logging').error(exception, cause);
       };
     }
   ]);

@@ -1,20 +1,12 @@
-var argv = require('yargs').argv;
-
 var gulp = require('gulp');
-
-// Plugins.
 var jshint = require('gulp-jshint');
 var stylish = require('jshint-stylish');
-var sass = require('gulp-sass');
-
-var sourcemaps = require('gulp-sourcemaps');
 var concat = require('gulp-concat');
 var uglify = require('gulp-uglify');
 var ngAnnotate = require('gulp-ng-annotate');
 var rename = require('gulp-rename');
-var gulpif = require('gulp-if');
-
 var header = require('gulp-header');
+
 var pkg = require('./version.json');
 var banner = ['/**',
   ' * @name <%= pkg.name %>',
@@ -26,15 +18,12 @@ var banner = ['/**',
 // We only want to process our own non-processed JavaScript files.
 var jsPaths = [
   './app/app.js',
-  '!./app/config.js',
-  '!./app/example.config.js',
-  './app/**/**/**/*.js'
+  './app/*.js'
 ];
 var jsAssetPaths = [
   './assets/lib/jquery-*.min.js',
   './assets/lib/angular.min.js',
-  './assets/lib/*.js',
-  './assets/modules/**/*.js'
+  './assets/lib/*.js'
 ];
 var adminBuildDir = './assets/build';
 

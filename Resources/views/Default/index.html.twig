@@ -8,7 +8,7 @@
 
   <link rel="stylesheet" href="{{ asset('bundles/os2displayscreen/assets/css/styles.css') }}">
 
-  <script src="{{ asset('bundles/os2displayscreen/app/config.js') }}"></script>
+  <script src="{{ asset('bundles/os2displayscreen/config.js') }}"></script>
 
   {% if app.environment == 'prod' %}
     <script src="{{ asset('bundles/os2displayscreen/assets/build/assets.min.js') }}"></script>
@@ -22,18 +22,17 @@
     <script src="{{ asset('bundles/os2displayscreen/assets/lib/locale_da.js') }}"></script>
     <script src="{{ asset('bundles/os2displayscreen/assets/lib/offline-0.7.11.min.js') }}"></script>
     <script src="{{ asset('bundles/os2displayscreen/assets/lib/stacktrace-0.6.4.min.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/assets/modules/itkLog/itkLog.js') }}"></script>
 
     <script src="{{ asset('bundles/os2displayscreen/app/app.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/app/pages/index/indexController.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/app/pages/notActivated/notActivatedController.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/app/shared/components/date/dateComponent.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/app/shared/components/digital-clock/digitalClockComponent.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/app/shared/components/keypress/keypress.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/app/shared/filters/activeEvents.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/app/shared/region/region.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/app/shared/slide/slide.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/app/shared/socket/socket.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/logging.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/indexController.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/dateComponent.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/digitalClockComponent.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/keypress.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/activeEvents.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/region.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/slide.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/socket.js') }}"></script>
   {% endif %}
 </head>
 <body data-ng-controller="IndexController" data-itk-keypress="logout()" data-key="73" data-modifier="17">
