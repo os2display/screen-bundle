@@ -17,15 +17,15 @@ var banner = ['/**',
 
 // We only want to process our own non-processed JavaScript files.
 var jsPaths = [
-  './app/app.js',
-  './app/*.js'
+  'Resources/public/app/app.js',
+  'Resources/public/app/*.js'
 ];
 var jsAssetPaths = [
-  './assets/lib/jquery-*.min.js',
-  './assets/lib/angular.min.js',
-  './assets/lib/*.js'
+  'Resources/public/assets/lib/jquery-*.min.js',
+  'Resources/public/assets/lib/angular.min.js',
+  'Resources/public/assets/lib/*.js'
 ];
-var adminBuildDir = './assets/build';
+var adminBuildDir = 'Resources/public/assets/build';
 
 /**
  * Run Javascript through JSHint.

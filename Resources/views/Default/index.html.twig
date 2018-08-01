@@ -8,7 +8,9 @@
 
   <link rel="stylesheet" href="{{ asset('bundles/os2displayscreen/assets/css/styles.css') }}">
 
-  <script src="{{ asset('bundles/os2displayscreen/config.js') }}"></script>
+  <script type="text/javascript">
+      window.config = {{ screenConfig | json_encode() | raw }};
+  </script>
 
   {% if app.environment == 'prod' %}
     <script src="{{ asset('bundles/os2displayscreen/assets/build/assets.min.js') }}"></script>

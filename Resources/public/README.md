@@ -1,10 +1,9 @@
-# Aroskanalen screen
+# os2display screen
 
+## Introduction
+This is a javascript client for the os2display system. 
 
-# Introduction
-This is a javascript client for aroskanalen dislpay systems. For more information see https://github.com/aroskanalen/docs/blob/development/Installation%20guide.md in the docs repository on github.com.
-
-# Flow
+## Flow
 1. The index.html loads all resources starts the indexController.
 2. The indexController starts the socket.js which sets up the connection with the middleware.
      * if there exists a token in the cookie the connection is resumed with this token.

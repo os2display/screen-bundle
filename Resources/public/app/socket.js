@@ -10,6 +10,10 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'logging',
         // Get the load configuration object.
         var config = window.config;
 
+        if (config.strategy !== 'push') {
+            return factory;
+        }
+
         // Communication with web-socket.
         var socket;
 
@@ -263,6 +267,14 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'logging',
                 socket.emit('logout');
             });
         };
+
+        $rootScope.$on('connectionStart', function () {
+            factory.start();
+        });
+
+        $rootScope.$on('connectionLogout', function () {
+            factory.logout();
+        });
 
         /********************************
          * Public methods

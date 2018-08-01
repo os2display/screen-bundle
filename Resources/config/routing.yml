@@ -1,3 +1,7 @@
-os2display_screen_main:
+os2display_screen_push:
     path:     /screen
-    defaults: { _controller: Os2DisplayScreenBundle:Default:index }
+    defaults: { _controller: Os2DisplayScreenBundle:Default:push }
+
+os2display_screen_pull:
+    path:     /screen_pull
+    defaults: { _controller: Os2DisplayScreenBundle:Default:pull }
