@@ -1,0 +1,3 @@
+os2display_screen_main:
+    path:     /screen
+    defaults: { _controller: Os2DisplayScreenBundle:Default:index }

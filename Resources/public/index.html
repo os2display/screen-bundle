@@ -1,0 +1,19 @@
+<html data-ng-app="ikApp">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet" href="assets/css/styles.css?1704201801">
+
+    <title>Os2Display</title>
+
+    <script src="app/config.js"></script>
+    <script src="assets/build/assets.min.js?1704201801"></script>
+    <script src="assets/build/app.min.js?1704201801"></script>
+  </head>
+  <body data-ng-controller="IndexController" data-itk-keypress="logout()" data-key="73" data-modifier="17">
+    <div class="fallback-image" data-ng-show="displayFallbackImage" data-ng-style="{'background-image': 'url(' + fallbackImageUrl + ')'}"></div>
+    <div class="content" data-ng-include="template"></div>
+  </body>
+</html>

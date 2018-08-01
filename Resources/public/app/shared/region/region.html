@@ -1,0 +1,18 @@
+<div data-ng-show="displayIndex === 0" class="slide-block">
+  <div data-ng-repeat="channelKey in channelKeys[0]">
+    <div data-ng-repeat="slide in channels[0][channelKey].slides" data-ng-show="channelIndex === channelKey && slideIndex === $index && displayIndex === 0" class="slide">
+      <slide ik-slide="slide" scale="scale" region-id="regionId" array-id="0" channel-id="channelKey" index="$index" show="channelIndex === channelKey && slideIndex === $index && displayIndex === 0"></slide>
+    </div>
+  </div>
+</div>
+<div data-ng-show="displayIndex === 1" class="slide-block">
+  <div data-ng-repeat="channelKey in channelKeys[1]">
+    <div data-ng-repeat="slide in channels[1][channelKey].slides" data-ng-show="channelIndex === channelKey && slideIndex === $index && displayIndex === 1" class="slide">
+      <slide ik-slide="slide" scale="scale" region-id="regionId" array-id="1" channel-id="channelKey" index="$index" show="channelIndex === channelKey && slideIndex === $index && displayIndex === 1"></slide>
+    </div>
+  </div>
+</div>
+<div class="progress" data-ng-hide="!showProgress || progressBoxElements <= 1">
+  <div class="progress-bar" data-ng-style="progressBarStyle"></div>
+  <div class="progress-box">{{progressBoxElementsIndex}} / {{progressBoxElements}}</div>
+</div>
