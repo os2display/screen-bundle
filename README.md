@@ -1,2 +1,5 @@
-# screen-bundle
-Bundle to expose the screen frontend
+# OS2Display screen-bundle
+Bundle to add a screen frontend to the administration.
+
+## Access screen
+To open screen go to `/screen`.
