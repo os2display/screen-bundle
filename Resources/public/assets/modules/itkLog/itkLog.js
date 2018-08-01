@@ -172,7 +172,7 @@ app.directive('itkLog', ['itkLog',
 
       return {
         restrict: 'E',
-        templateUrl: 'assets/modules/itkLog/log.html?' + config.version,
+        templateUrl: 'bundles/os2displayscreen/assets/modules/itkLog/log.html?' + config.version,
         link: function (scope) {
           scope.expanded = false;
 

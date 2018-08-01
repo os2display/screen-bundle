@@ -619,7 +619,7 @@
             }
           });
         },
-        templateUrl: 'app/shared/region/region.html?' + window.config.version
+        templateUrl: 'bundles/os2displayscreen/app/shared/region/region.html?' + window.config.version
       };
     }
   ]);

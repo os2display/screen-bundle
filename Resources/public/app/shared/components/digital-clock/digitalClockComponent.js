@@ -24,7 +24,7 @@
       return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'app/shared/components/digital-clock/digital-clock.html?' + window.config.version,
+        templateUrl: 'bundles/os2displayscreen/app/shared/components/digital-clock/digital-clock.html?' + window.config.version,
         scope: {
         },
         link: function (scope) {

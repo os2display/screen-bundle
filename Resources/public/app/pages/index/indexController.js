@@ -19,14 +19,14 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
     }
 
     // The template to render in the index.html's ng-include.
-    $scope.template = 'app/pages/index/init.html?' + window.config.version;
+    $scope.template = 'bundles/os2displayscreen/app/pages/index/init.html?' + window.config.version;
 
     // Is the screen running (has the screen template been loaded?).
     var running = false;
 
     // Default fallback image, used when no slide content exists. Default to
     // displaying it during load.
-    $scope.fallbackImageUrl = window.config.fallback_image ? window.config.fallback_image : 'assets/images/fallback_default.png';
+    $scope.fallbackImageUrl = window.config.fallback_image ? window.config.fallback_image : 'bundles/os2displayscreen/assets/images/fallback_default.png';
     $scope.displayFallbackImage = true;
 
     // Stored channels for when the screen template has not yet been loaded.
@@ -70,7 +70,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      */
     $rootScope.$on('activationNotComplete', function() {
       $scope.$apply(function () {
-        $scope.template = 'app/pages/notActivated/not-activated.html?' + window.config.version;
+        $scope.template = 'bundles/os2displayscreen/app/pages/notActivated/not-activated.html?' + window.config.version;
       });
     });
 
@@ -81,7 +81,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      */
     $rootScope.$on('awaitingContent', function() {
       $scope.$apply(function () {
-        $scope.template = 'app/pages/index/awaiting-content.html?' + window.config.version;
+        $scope.template = 'bundles/os2displayscreen/app/pages/index/awaiting-content.html?' + window.config.version;
       });
     });
 

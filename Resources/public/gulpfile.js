@@ -54,7 +54,7 @@ gulp.task('js', function () {
   gulp.src(jsPaths)
     .pipe(concat('app.js'))
     .pipe(ngAnnotate())
-    .pipe(gulpif(argv.production, uglify()))
+    .pipe(uglify())
     .pipe(rename({extname: ".min.js"}))
     .pipe(header(banner, { pkg : pkg } ))
     .pipe(gulp.dest(adminBuildDir))

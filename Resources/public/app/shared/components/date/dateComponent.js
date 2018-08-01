@@ -24,7 +24,7 @@
       return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'app/shared/components/date/date.html?' + window.config.version,
+        templateUrl: 'bundles/os2displayscreen/app/shared/components/date/date.html?' + window.config.version,
         scope: {
           theme: '@'
         },
