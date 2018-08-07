@@ -1,0 +1,29 @@
+{
+  "name": "screen-bundle",
+  "version": "1.0.0",
+  "description": "A Symfony bundle to run on screens for os2display",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.5",
+    "gulp-jshint": "^2.1.0",
+    "gulp-ng-annotate": "^2.1.0",
+    "gulp-rename": "^1.4.0",
+    "gulp-uglify": "^3.0.1",
+    "jshint": "^2.9.6",
+    "jshint-stylish": "^2.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itk-os2display/screen-bundle.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/itk-os2display/screen-bundle/issues"
+  },
+  "homepage": "https://github.com/itk-os2display/screen-bundle#readme"
+}

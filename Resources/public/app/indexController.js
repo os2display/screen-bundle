@@ -8,8 +8,8 @@
  *
  * Sets up the socket connection and displays the activation page if relevant.
  */
-angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '$timeout', 'socket', 'logging', 'cssInjector',
-  function ($scope, $rootScope, $timeout, socket, logging, cssInjector) {
+angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '$timeout', 'socket', 'logging', 'cssInjector', 'pullStrategy',
+  function ($scope, $rootScope, $timeout, socket, logging, cssInjector, pullStrategy) {
     'use strict';
 
     // Initial slide function array to hold custom slide plugins loaded from
@@ -19,7 +19,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
     }
 
     // The template to render in the index.html's ng-include.
-    $scope.template = 'bundles/os2displayscreen/app/views/index.html?' + window.config.version;
+    $scope.template = '/bundles/os2displayscreen/app/views/index.html?' + window.config.version;
     $scope.message = 'Initializing...';
 
     // Is the screen running (has the screen template been loaded?).
@@ -27,7 +27,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
 
     // Default fallback image, used when no slide content exists. Default to
     // displaying it during load.
-    $scope.fallbackImageUrl = window.config.fallback_image ? window.config.fallback_image : 'bundles/os2displayscreen/assets/images/fallback_default.png';
+    $scope.fallbackImageUrl = '/' + (window.config.fallback_image ? window.config.fallback_image : 'bundles/os2displayscreen/assets/images/fallback_default.png');
     $scope.displayFallbackImage = true;
 
     // Stored channels for when the screen template has not yet been loaded.
@@ -107,20 +107,20 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      *        has been loaded, instead of the timeouts.
      */
     $rootScope.$on('start', function(event, screen) {
+      // Load screen template and trigger angular digest to update the screen
+      // with the template.
+      $timeout(function () {
+        // Inject the screen stylesheet.
+        cssInjector.add(screen.template.path_css);
+
+        // Set the screen template.
+        $scope.template = screen.template.path_live;
+        $scope.templateDirectory = screen.template.path;
+
+        $scope.options = screen.options;
+      });
+
       if (!running) {
-        // Load screen template and trigger angular digest to update the screen
-        // with the template.
-        $scope.$apply(function () {
-          // Inject the screen stylesheet.
-          cssInjector.add(screen.template.path_css);
-
-          // Set the screen template.
-          $scope.template = screen.template.path_live;
-          $scope.templateDirectory = screen.template.path;
-
-          $scope.options = screen.options;
-        });
-
         // Wait 5 seconds for the screen template to load.
         $timeout(function() {
           running = true;
@@ -153,11 +153,9 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      * Logout and reload the screen.
      */
     $scope.logout = function logout() {
-      // Use the socket to logout.
-      socket.logout();
+      $rootScope.$emit('connectionLogout');
     };
 
-    // Start the socket connection to the middleware.
-    socket.start();
+    $rootScope.$emit('connectionStart');
   }
 ]);
