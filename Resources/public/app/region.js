@@ -563,12 +563,12 @@
               region.updateSlideShow(channel.data);
             }
             else {
-              // Ensures that this else statement is only runned one time.
+              // Ensures that this else statement is only run one time.
               running = true;
 
               // The show was not running, so update the slides and start the show.
               // @TODO: Information about shadow.
-              scope.$apply(function () {
+              $timeout(function () {
                 // Insert channel into both arrays.
                 var id = "" + channel.data.id;
                 scope.channels[0][id] = angular.copy(channel.data);
@@ -583,7 +583,7 @@
                 scope.channelKey = -1;
 
                 // Make sure the slides have been loaded. Then start the show.
-                // @TODO: We need to find an way to detect that the first slide
+                // @TODO: We need to find a way to detect that the first slide
                 //        content have been loaded.
                 $timeout(function () {
                   // The first slide index is 0, so its ++1 in the nextSlide,
@@ -609,11 +609,11 @@
            */
           $rootScope.$on('removeChannel', function removeChannelEvent(event, channel) {
             var shadowIndex = region.getShadowIndex();
-            var id = "" + channel.id;
+            var id = channel.id;
 
             // If the channel is in the array, remove it.
             if (scope.channels[shadowIndex].hasOwnProperty(id)) {
-              logging.info("Removing channel " + channel.id + " from region " + scope.regionId + " with shadowIndex: " + shadowIndex);
+              logging.info("Removing channel " + id + " from region " + scope.regionId + " with shadowIndex: " + shadowIndex);
 
               delete scope.channels[shadowIndex][id];
               scope.channelKeys[shadowIndex] = Object.keys(scope.channels[shadowIndex]);
@@ -621,7 +621,7 @@
             }
           });
         },
-        templateUrl: 'bundles/os2displayscreen/app/views/region.html?' + window.config.version
+        templateUrl: '/bundles/os2displayscreen/app/views/region.html?' + window.config.version
       };
     }
   ]);

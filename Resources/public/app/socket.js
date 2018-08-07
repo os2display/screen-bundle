@@ -269,10 +269,12 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'logging',
         };
 
         $rootScope.$on('connectionStart', function () {
+            logging.info('connectionStart');
             factory.start();
         });
 
         $rootScope.$on('connectionLogout', function () {
+            logging.info('connectionLogout');
             factory.logout();
         });
 
