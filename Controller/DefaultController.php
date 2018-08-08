@@ -29,7 +29,7 @@ class DefaultController extends Controller
     {
         $screenConfig = (object)[
             'strategy' => 'pull',
-            'updateInterval' => 15,
+            'updateInterval' => 15,  // seconds
             'updatePath' => '/screen/serialized/',
             'screenId' => $screenId,
             'debug' => true,
@@ -61,7 +61,7 @@ class DefaultController extends Controller
             'ws' => (object)[
                 'server' => 'https://screen.os2display.vm/',
             ],
-            'apikey' => '059d9d9c50e0c45b529407b183b6a02f',
+            'apikey' => $this->container->get('middleware_apikey'),
             'cookie' => (object)[
                 'secure' => false,
             ],
