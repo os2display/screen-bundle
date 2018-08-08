@@ -6,10 +6,10 @@
 /**
  * Index Controller.
  *
- * Sets up the socket connection and displays the activation page if relevant.
+ * Sets up the initial page and and displays the activation page if relevant.
  */
-angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '$timeout', 'socket', 'logging', 'cssInjector', 'pullStrategy',
-  function ($scope, $rootScope, $timeout, socket, logging, cssInjector, pullStrategy) {
+angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '$timeout', 'logging', 'cssInjector',
+  function ($scope, $rootScope, $timeout, logging, cssInjector) {
     'use strict';
 
     // Initial slide function array to hold custom slide plugins loaded from
@@ -20,7 +20,6 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
 
     // The template to render in the index.html's ng-include.
     $scope.template = '/bundles/os2displayscreen/app/views/index.html?' + window.config.version;
-    $scope.message = 'Initializing...';
 
     // Is the screen running (has the screen template been loaded?).
     var running = false;
@@ -41,11 +40,13 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
     $scope.activated = true;
     $scope.activationCode = '';
 
+    $scope.screenTemplateLoaded = false;
+
     /**
      * Submit handler for the activation screen.
      */
     $scope.submitActivationCode = function(activationCode) {
-      socket.activateScreenAndConnect(activationCode);
+      $rootScope.$emit('activateScreenAndConnect', activationCode);
     };
 
     /**
@@ -80,20 +81,17 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      * Result is that the not-activated template is shown.
      */
     $rootScope.$on('activationNotComplete', function() {
-      $scope.$apply(function () {
+      $timeout(function () {
         $scope.activated = false;
       });
     });
 
     /**
      * Register to the awaitingContent event.
-     *
-     * @TODO: Figure out if this is still needed.
      */
     $rootScope.$on('awaitingContent', function() {
-      $scope.$apply(function () {
+      $timeout(function () {
         $scope.activated = true;
-        $scope.message = 'Awaiting content...';
       });
     });
 
@@ -112,6 +110,8 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
       $timeout(function () {
         // Inject the screen stylesheet.
         cssInjector.add(screen.template.path_css);
+
+        $scope.screenTemplateLoaded = screen.template.path_live;
 
         // Set the screen template.
         $scope.template = screen.template.path_live;
@@ -139,8 +139,6 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      *
      * If the screen template is not running yet, store the channel for
      * emission after the screen template has been loaded.
-     *
-     * Add channel is emitted from the socket, when it receives channels from the middleware.
      */
     $rootScope.$on('addChannel', function(event, data) {
       if (!running) {

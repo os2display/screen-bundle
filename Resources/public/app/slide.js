@@ -53,7 +53,7 @@ angular.module('ikApp').directive('slide', ['cssInjector',
 
           // Check if script have been loaded. If it has not, load the script
           // and run setup function.
-          if (window.slideFunctions.indexOf(scope.ikSlide.js_script_id) === -1) {
+          if (!window.slideFunctions[scope.ikSlide.js_script_id]) {
             $.getScript(scope.ikSlide.js_path, function () {
               // The loaded script set an object with setup() and run() methods
               // into the slideFunctions array. Hence we can call setup on the

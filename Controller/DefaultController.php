@@ -29,14 +29,14 @@ class DefaultController extends Controller
     {
         $screenConfig = (object)[
             'strategy' => 'pull',
-            'updateInterval' => 15,  // seconds
-            'updatePath' => '/screen/serialized/',
+            'updateInterval' => $this->container->getParameter('os2_display_screen.strategies.pull.update_interval'),
+            'updatePath' => $this->container->getParameter('os2_display_screen.strategies.pull.update_path'),
             'screenId' => $screenId,
-            'debug' => true,
+            'debug' => $this->container->getParameter('os2_display_screen.strategies.pull.debug'),
             'version' => $this->container->getParameter('version'),
             'logging' => (object)[
-                'logToConsole' => true,
-                'logLevel' => 'all',
+                'logToConsole' => $this->container->getParameter('os2_display_screen.strategies.pull.log_to_console'),
+                'logLevel' => $this->container->getParameter('os2_display_screen.strategies.pull.log_level'),
             ]
         ];
 
@@ -55,21 +55,21 @@ class DefaultController extends Controller
         $screenConfig = (object)[
             'strategy' => 'push',
             'resource' => (object)[
-                'server' => '//admin.os2display.vm/',
-                'uri' => 'middleware',
+                'server' => $this->container->getParameter('os2_display_screen.strategies.push.resource.server'),
+                'uri' => $this->container->getParameter('os2_display_screen.strategies.push.resource.uri'),
             ],
             'ws' => (object)[
-                'server' => 'https://screen.os2display.vm/',
+                'server' => $this->container->getParameter('os2_display_screen.strategies.push.ws.server'),
             ],
-            'apikey' => $this->container->get('middleware_apikey'),
+            'apikey' => $this->container->getParameter('middleware_apikey'),
             'cookie' => (object)[
-                'secure' => false,
+               'secure' => $this->container->getParameter('os2_display_screen.strategies.push.cookie.secure'),
             ],
-            'debug' => true,
+            'debug' => $this->container->getParameter('os2_display_screen.strategies.push.debug'),
             'version' => $this->container->getParameter('version'),
             'logging' => (object)[
-                'logToConsole' => true,
-                'logLevel' => 'all',
+                'logToConsole' => $this->container->getParameter('os2_display_screen.strategies.push.log_to_console'),
+                'logLevel' => $this->container->getParameter('os2_display_screen.strategies.push.log_level'),
             ]
         ];
 

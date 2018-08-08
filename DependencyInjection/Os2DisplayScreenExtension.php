@@ -3,9 +3,6 @@
 namespace Os2Display\ScreenBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use Symfony\Component\DependencyInjection\Loader;
 use Os2Display\CoreBundle\DependencyInjection\Os2DisplayBaseExtension;
 
 /**
@@ -21,5 +18,56 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
         $this->dir = __DIR__;
 
         parent::load($configs, $container);
+
+        $configuration = new Configuration();
+        $processedConfig = $this->processConfiguration($configuration, $configs);
+
+        $defaultConfig = [
+            'strategies' => [
+                'pull' => [
+                    'enabled' => true,
+                    'debug' => true,
+                    'log_to_console' => true,
+                    'log_level' => 'all',
+                    'update_path' => '/screen/serialized/',
+                    'update_interval' => 60,
+                ],
+                'push' => [
+                    'enabled' => false,
+                    'debug' => true,
+                    'log_to_console' => true,
+                    'log_level' => 'all',
+                    'resource' => [
+                        'server' => '//admin.os2display.vm/',
+                        'uri' => 'middleware',
+                    ],
+                    'ws' => [
+                        'server' => 'https://screen.os2display.vm/',
+                    ],
+                    'apikey' => '',
+                    'cookie' => [
+                        'secure' => false,
+                    ],
+                ],
+            ],
+        ];
+
+        $resultingConfig = array_replace_recursive($defaultConfig, $processedConfig);
+
+        $container->setParameter('os2_display_screen.strategies.pull.enabled', $resultingConfig['strategies']['pull']['enabled']);
+        $container->setParameter('os2_display_screen.strategies.pull.debug', $resultingConfig['strategies']['pull']['debug']);
+        $container->setParameter('os2_display_screen.strategies.pull.log_to_console', $resultingConfig['strategies']['pull']['log_to_console']);
+        $container->setParameter('os2_display_screen.strategies.pull.log_level', $resultingConfig['strategies']['pull']['log_level']);
+        $container->setParameter('os2_display_screen.strategies.pull.update_path', $resultingConfig['strategies']['pull']['update_path']);
+        $container->setParameter('os2_display_screen.strategies.pull.update_interval', $resultingConfig['strategies']['pull']['update_interval']);
+
+        $container->setParameter('os2_display_screen.strategies.push.enabled', $resultingConfig['strategies']['push']['enabled']);
+        $container->setParameter('os2_display_screen.strategies.push.debug', $resultingConfig['strategies']['push']['debug']);
+        $container->setParameter('os2_display_screen.strategies.push.log_to_console', $resultingConfig['strategies']['push']['log_to_console']);
+        $container->setParameter('os2_display_screen.strategies.push.log_level', $resultingConfig['strategies']['push']['log_level']);
+        $container->setParameter('os2_display_screen.strategies.push.resource.server', $resultingConfig['strategies']['push']['resource']['server']);
+        $container->setParameter('os2_display_screen.strategies.push.resource.uri', $resultingConfig['strategies']['push']['resource']['uri']);
+        $container->setParameter('os2_display_screen.strategies.push.ws.server', $resultingConfig['strategies']['push']['ws']['server']);
+        $container->setParameter('os2_display_screen.strategies.push.cookie.secure', $resultingConfig['strategies']['push']['cookie']['secure']);
     }
 }

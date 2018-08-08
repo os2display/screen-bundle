@@ -20,9 +20,48 @@ class Configuration implements ConfigurationInterface
         $treeBuilder = new TreeBuilder();
         $rootNode = $treeBuilder->root('os2_display_screen');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('strategies')
+                    ->children()
+                        ->arrayNode('pull')
+                            ->children()
+                                ->booleanNode('enabled')->defaultTrue()->end()
+                                ->booleanNode('debug')->defaultTrue()->end()
+                                ->booleanNode('log_to_console')->defaultTrue()->end()
+                                ->scalarNode('log_level')->defaultValue('all')->end()
+                                ->scalarNode('update_path')->defaultValue('/screen/serialized/')->end()
+                                ->integerNode('update_interval')->defaultValue('60')->end()
+                            ->end()
+                        ->end()
+                        ->arrayNode('push')
+                            ->children()
+                                ->booleanNode('enabled')->defaultTrue()->end()
+                                ->booleanNode('debug')->defaultTrue()->end()
+                                ->booleanNode('log_to_console')->defaultTrue()->end()
+                                ->scalarNode('log_level')->defaultValue('all')->end()
+                                ->arrayNode('resource')
+                                    ->children()
+                                        ->scalarNode('server')->end()
+                                        ->scalarNode('uri')->end()
+                                    ->end()
+                                ->end()
+                                ->arrayNode('ws')
+                                    ->children()
+                                        ->scalarNode('server')->end()
+                                    ->end()
+                                ->end()
+                                ->arrayNode('cookie')
+                                    ->children()
+                                        ->scalarNode('secure')->defaultFalse()->end()
+                                    ->end()
+                                ->end()
+                            ->end()
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

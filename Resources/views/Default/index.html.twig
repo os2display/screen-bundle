@@ -22,8 +22,6 @@
     <script src="{{ asset('bundles/os2displayscreen/assets/lib/angular-css-injector-1.0.4.js') }}"></script>
     <script src="{{ asset('bundles/os2displayscreen/assets/lib/angular-sanitize.min.js') }}"></script>
     <script src="{{ asset('bundles/os2displayscreen/assets/lib/locale_da.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/assets/lib/offline-0.7.11.min.js') }}"></script>
-    <script src="{{ asset('bundles/os2displayscreen/assets/lib/stacktrace-0.6.4.min.js') }}"></script>
 
     <script src="{{ asset('bundles/os2displayscreen/app/app.js') }}"></script>
     <script src="{{ asset('bundles/os2displayscreen/app/logging.js') }}"></script>
@@ -37,6 +35,16 @@
     <script src="{{ asset('bundles/os2displayscreen/app/socket.js') }}"></script>
     <script src="{{ asset('bundles/os2displayscreen/app/pull.js') }}"></script>
   {% endif %}
+
+  {# Initialize the relevant strategy #}
+  <script type="text/javascript">
+      {% if screenConfig.strategy == 'pull' %}
+          angular.module('ikApp').run(['pull', angular.noop]);
+      {% else %}
+          {# Default: 'push' strategy #}
+          angular.module('ikApp').run(['socket', angular.noop]);
+      {% endif %}
+  </script>
 </head>
 <body data-ng-controller="IndexController" data-itk-keypress="logout()" data-key="73" data-modifier="17">
   <div class="fallback-image"

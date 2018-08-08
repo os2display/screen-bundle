@@ -5,9 +5,6 @@ if (!window.config || !window.config.logging) {
 
 /**
  * Logging.
- *
- * requires stacktrace.js - http://www.stacktracejs.com/
- *   tested with v0.6.4
  */
 angular.module('ikApp').factory('logging', [
         '$http', '$timeout', '$log',
@@ -34,8 +31,7 @@ angular.module('ikApp').factory('logging', [
                         'type': 'error',
                         'date': new Date(),
                         'message': '' + message,
-                        'cause': cause,
-                        'stacktrace': printStackTrace()
+                        'cause': cause
                     };
 
                     factory.message = error;
@@ -154,7 +150,7 @@ angular.module('ikApp').directive('logging', [
 
         return {
             restrict: 'E',
-            templateUrl: 'bundles/os2displayassets/modules/logging/log.html',
+            templateUrl: '/bundles/os2displayscreen/app/views/logging.html',
             link: function (scope) {
                 scope.expanded = false;
 

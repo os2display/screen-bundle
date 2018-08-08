@@ -1,7 +1,10 @@
 /**
+ * Push strategy for getting data from the administration.
+ *
  * Web-socket factory using socket.io to communicate with the middleware.
  */
-angular.module('ikApp').factory('socket', ['$rootScope', 'logging',
+angular.module('ikApp').factory('socket', [
+    '$rootScope', 'logging',
     function ($rootScope, logging) {
         'use strict';
 
@@ -13,6 +16,8 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'logging',
         if (config.strategy !== 'push') {
             return factory;
         }
+
+        logging.info("Data strategy: 'push'");
 
         // Communication with web-socket.
         var socket;
@@ -88,7 +93,7 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'logging',
                     }
 
                     document.cookie = cookie;
-                }
+                };
             };
 
             return Storage;
@@ -194,11 +199,8 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'logging',
                 location.reload(true);
             });
 
-            /**
-             * @TODO: HANDLE CHANNEL REMOVED EVENT:
-             */
+            // Handle channelRemoved event.
             socket.on('channelRemoved', function (data) {
-                // Display channel ID of channel to remove.
                 $rootScope.$emit('removeChannel', data);
             });
 
@@ -276,6 +278,11 @@ angular.module('ikApp').factory('socket', ['$rootScope', 'logging',
         $rootScope.$on('connectionLogout', function () {
             logging.info('connectionLogout');
             factory.logout();
+        });
+
+        $rootScope.$on('activateScreenAndConnect', function (event, activationCode) {
+            logging.info('activateScreenAndConnect');
+            factory.activateScreenAndConnect(activationCode);
         });
 
         /********************************
