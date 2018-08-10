@@ -1,0 +1,11 @@
+{
+  "screen": {
+    "extra_fields": {
+      "activation_code": "Aktiveringskode",
+      "publicly_available": "Offentligt tilgængelighed",
+      "public_url": "Offentlig sti til afspilning",
+      "publicly_available_toggle_disabled": "Gør offentlig",
+      "publicly_available_toggle_enabled": "Fjern offentliggørelse"
+    }
+  }
+}

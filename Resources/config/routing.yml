@@ -9,3 +9,23 @@ os2display_screen_pull:
 os2display_get_serialized_screen:
     path:     /screen/serialized/{screenId}
     defaults: { _controller: Os2DisplayScreenBundle:Default:getCurrentScreenContent }
+
+os2display_screen_publicly_available_get:
+    path:     /screen/api/publicly_available/{screenId}
+    methods: ['GET']
+    defaults: { _controller: Os2DisplayScreenBundle:Default:getScreenPubliclyAvailable }
+
+os2display_screen_publicly_available_set:
+    path:     /screen/api/publicly_available/{screenId}
+    methods: ['POST']
+    defaults: { _controller: Os2DisplayScreenBundle:Default:setScreenPubliclyAvailable }
+
+## Make publicly available in security.yml.
+
+os2display_screen_public_pull:
+    path:     /screen/public/{publicScreenId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:pullPublicScreen }
+
+os2display_screen_public_get_serialized_screen:
+    path:     /screen/public/serialized/{publicScreenId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:getCurrentScreenContentPublic }
