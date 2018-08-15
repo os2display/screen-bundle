@@ -30,7 +30,7 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
                     'log_to_console' => true,
                     'log_level' => 'all',
                     'update_path' => '/screen/serialized/',
-                    'update_interval' => 60,
+                    'update_interval' => 60 * 5,   // Every 5 minutes.
                 ],
                 'push' => [
                     'enabled' => false,

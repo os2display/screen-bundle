@@ -49,10 +49,31 @@ angular.module('screenApp').service('screenAppSetup', [
             if (data.type === 'screen') {
                 setupScreenBundleOpenPreview(data);
 
-                var html = '<a ng-click="screenBundleOpenPreview(' + data.entity.id + ')"><img class="os2display-screen-bundle--play-icon" src="bundles/os2displayscreen/assets/icons/play.svg"</a>' +
+                var title = $translate.instant('screen.app.start_preview');
+
+                var html = '<div><a ng-click="screenBundleOpenPreview(' + data.entity.id + ')" class="os2display-screen-bundle--play-icon-active" title="' + title + '"><img class="os2display-screen-bundle--play-icon" src="bundles/os2displayscreen/assets/icons/play.svg"</a>' +
                     '<span data-ng-if="screenBundleShowPreview === ' + data.entity.id + '">' +
                         '<screen-bundle-preview-screen screen-id="' + data.entity.id + '" close="screenBundleClosePreview()"></screen-bundle-preview-screen>' +
-                    '</span>';
+                    '</span></div>';
+
+                $http.get('/screen/api/publicly_available/' + data.entity.id).then(
+                    function (response) {
+                        if (response.data.enabled) {
+                            var title = $translate.instant('screen.app.public');
+
+                            var html = '<div><img class="os2display-screen-bundle--unlocked-icon" src="bundles/os2displayscreen/assets/icons/public.svg" title="' + title + '"/></div>';
+
+                            busService.$emit(data.returnEvent, {
+                                html: html
+                            });
+                        }
+                    },
+                    function (err) {
+                        if (err.status !== 404) {
+                            console.log(err);
+                        }
+                    }
+                );
 
                 busService.$emit(data.returnEvent, {
                     html: html
@@ -110,21 +131,21 @@ angular.module('screenApp').service('screenAppSetup', [
                     '<form class="cpw--wrapper" data-info="From: screen-bundle">' +
                         '<div class="cpw--text">' +
                             '<label class="cpw--text-label">' + $translate.instant('screen.extra_fields.preview') + '</label>' +
-                            '<button class="cpw--add-channels-item-action" data-ng-click="screenBundleOpenPreview(' + data.entity.id + ')">' + $translate.instant('screen.extra_fields.preview_button') + '</button>' +
+                            '<button class="cpw--add-channels-item-action os2display-screen-bundle--extra-fields-button" data-ng-click="screenBundleOpenPreview(' + data.entity.id + ')">' + $translate.instant('screen.extra_fields.preview_button') + '</button>' +
                             '<span data-ng-if="screenBundleShowPreview === ' + data.entity.id + '">' +
                                 '<screen-bundle-preview-screen screen-id="' + data.entity.id + '" close="screenBundleClosePreview()"></screen-bundle-preview-screen>' +
                             '</span>' +
                         '</div>' +
-                        '<div class="cpw--text" data-ng-if="screenBundlePublicEnabled && screenBundlePublicUrl">' +
-                            '<label class="cpw--text-label">' + $translate.instant('screen.extra_fields.public_url') + '</label>' +
-                            '<input type="text" class="cpw--text-input" readonly="readonly" data-ng-model="screenBundlePublicUrl">' +
-                        '</div>' +
                         '<div class="cpw--text">' +
                             '<label class="cpw--text-label">' + $translate.instant('screen.extra_fields.publicly_available') + '</label>' +
-                            '<button data-ng-click="screenBundleTogglePublicAvailable()" data-ng-class="{\'cpw--add-channels-item-action\': !screenBundlePublicEnabled, \'cpw--selected-channels-item-action\': screenBundlePublicEnabled}">' +
+                            '<button data-ng-click="screenBundleTogglePublicAvailable()" class="os2display-screen-bundle--extra-fields-button" data-ng-class="{\'cpw--add-channels-item-action\': !screenBundlePublicEnabled, \'cpw--selected-channels-item-action\': screenBundlePublicEnabled}">' +
                                 '<span data-ng-if="screenBundlePublicEnabled">' + $translate.instant('screen.extra_fields.publicly_available_toggle_enabled') +  '</span>' +
                                 '<span data-ng-if="!screenBundlePublicEnabled">' + $translate.instant('screen.extra_fields.publicly_available_toggle_disabled') + '</span>' +
                             '</button>' +
+                        '</div>' +
+                        '<div class="cpw--text" data-ng-if="screenBundlePublicEnabled && screenBundlePublicUrl">' +
+                            '<label class="cpw--text-label">' + $translate.instant('screen.extra_fields.public_url') + '</label>' +
+                            '<input type="text" class="cpw--text-input" readonly="readonly" data-ng-model="screenBundlePublicUrl">' +
                         '</div>' +
                     '</form>';
 

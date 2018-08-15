@@ -5,9 +5,15 @@
   left: 5px;
 }
 
+.os2display-screen-bundle--unlocked-icon {
+  width: 20px;
+  position: absolute;
+  top: 30px;
+  left: 10px;
+}
+
 .os2display-screen-bundle--preview {
   position: fixed;
-  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
@@ -31,4 +37,8 @@
 
 .os2display-screen-bundle--preview-iframe {
   margin: 20px;
+}
+
+.os2display-screen-bundle--extra-fields-button {
+  max-width: 200px;
 }

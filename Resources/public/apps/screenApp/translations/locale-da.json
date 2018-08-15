@@ -8,6 +8,10 @@
       "publicly_available_toggle_enabled": "Fjern offentliggørelse",
       "preview": "Preview",
       "preview_button": "Åben preview"
+    },
+    "app": {
+      "start_preview": "Åben preview",
+      "public": "Offentligt tilgængelig"
     }
   }
 }
