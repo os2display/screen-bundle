@@ -142,7 +142,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
      */
     $rootScope.$on('addChannel', function(event, data) {
       if (!running) {
-        logging.info('Saving channel till screen is ready.');
+        logging.info('Saving channel until screen is ready.');
         savedChannelPushes.push(data);
       }
     });
