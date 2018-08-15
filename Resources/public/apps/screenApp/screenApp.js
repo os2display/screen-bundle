@@ -17,7 +17,6 @@ angular.module('screenApp').config([
                 prefix: appUrl + 'translations/locale-',
                 suffix: '.json'
             })
-            .useMissingTranslationHandlerLog()
             .preferredLanguage('da')
             .fallbackLanguage('da')
             .forceAsyncReload(true);
