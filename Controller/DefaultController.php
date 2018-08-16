@@ -119,8 +119,7 @@ class DefaultController extends Controller
         $publicScreen = $entityManager->getRepository(PublicScreen::class)->findOneByPublicUrl($publicScreenId);
 
         if (!$publicScreen || !$publicScreen->getEnabled()) {
-            // @TODO: Better error page.
-            throw new HttpException(400);
+            return $this->render('Os2DisplayScreenBundle:Default:not_allowed.html.twig');
         }
 
         $screen = $publicScreen->getScreen();
