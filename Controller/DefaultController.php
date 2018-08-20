@@ -11,8 +11,36 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class DefaultController extends Controller
 {
+    /**
+     * Get the url to the public screen.
+     *
+     * @param $publicScreen
+     * @return string
+     */
     private function getPublicUrl($publicScreen) {
         return $this->getParameter('absolute_path_to_server') . '/screen/public/' . $publicScreen->getPublicUrl();
+    }
+
+    /**
+     * Generate unique public id.
+     *
+     * @param $id
+     * @return bool|null|string
+     */
+    private function generatePublicId($id) {
+        $publicId = null;
+
+        $now = new \DateTime();
+
+        do {
+            $publicId = substr(sha1($id . $now->getTimestamp()), 0, 6);
+        }
+        while (
+            is_null($publicId) ||
+            $this->container->get('doctrine')->getRepository(PublicScreen::class)->findOneByPublicUrl($publicId)
+        );
+
+        return $publicId;
     }
 
     /**
@@ -60,7 +88,7 @@ class DefaultController extends Controller
 
             $publicScreen = new PublicScreen();
             $publicScreen->setScreen($screen);
-            $publicScreen->setPublicUrl(sha1($screen->getId() . $now->getTimestamp()));
+            $publicScreen->setPublicUrl($this->generatePublicId($screen->getId()));
             $publicScreen->setCreatedAt($now);
             $publicScreen->setUser($this->getUser());
             $publicScreen->setCreatedBy($this->getUser());
@@ -81,6 +109,12 @@ class DefaultController extends Controller
         ]);
     }
 
+    /**
+     * Get the current content of a public screen.
+     *
+     * @param $publicScreenId
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
     public function getCurrentScreenContentPublicAction($publicScreenId) {
         $entityManager = $this->container->get('doctrine')->getEntityManager();
         $publicScreen = $entityManager->getRepository(PublicScreen::class)->findOneByPublicUrl($publicScreenId);
