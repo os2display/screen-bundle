@@ -30,7 +30,6 @@ class Configuration implements ConfigurationInterface
                                 ->booleanNode('debug')->defaultTrue()->end()
                                 ->booleanNode('log_to_console')->defaultTrue()->end()
                                 ->scalarNode('log_level')->defaultValue('all')->end()
-                                ->scalarNode('update_path')->defaultValue('/screen/serialized/')->end()
                                 ->integerNode('update_interval')->defaultValue('60')->end()
                             ->end()
                         ->end()

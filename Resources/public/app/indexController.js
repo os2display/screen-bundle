@@ -121,7 +121,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
       });
 
       if (!running) {
-        // Wait 5 seconds for the screen template to load.
+        // Wait 1 seconds for the screen template to load.
         $timeout(function() {
           running = true;
 
@@ -130,7 +130,7 @@ angular.module('ikApp').controller('IndexController', ['$scope', '$rootScope', '
             logging.info('Emitting channel saved channel.');
             $rootScope.$emit('addChannel', savedChannelPushes[i]);
           }
-        }, 5000);
+        }, 1000);
       }
     });
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Contains the PublicScreen model.
+ * Contains the PublicChannel model.
  */
 
 namespace Os2Display\ScreenBundle\Entity;
@@ -13,12 +13,12 @@ use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Os2Display\CoreBundle\Entity\ApiEntity;
 
 /**
- * PublicScreen entity.
+ * PublicChannel entity.
  *
- * @ORM\Table(name="ik_public_screen")
+ * @ORM\Table(name="ik_public_channel")
  * @ORM\Entity
  */
-class PublicScreen extends ApiEntity
+class PublicChannel extends ApiEntity
 {
     use TimestampableEntity;
     use BlameableEntity;
@@ -42,11 +42,11 @@ class PublicScreen extends ApiEntity
     private $user;
 
     /**
-     * Screen that is public.
+     * Channel that is public.
      *
-     * @ORM\OneToOne(targetEntity="Os2Display\CoreBundle\Entity\Screen")
+     * @ORM\OneToOne(targetEntity="Os2Display\CoreBundle\Entity\Channel")
      */
-    private $screen;
+    private $channel;
 
     /**
      * @ORM\Column(type="string")
@@ -85,17 +85,17 @@ class PublicScreen extends ApiEntity
     /**
      * @return mixed
      */
-    public function getScreen()
+    public function getChannel()
     {
-        return $this->screen;
+        return $this->channel;
     }
 
     /**
-     * @param mixed $screen
+     * @param mixed $channel
      */
-    public function setScreen($screen)
+    public function setChannel($channel)
     {
-        $this->screen = $screen;
+        $this->channel = $channel;
     }
 
     /**

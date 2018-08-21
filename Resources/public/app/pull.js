@@ -22,7 +22,7 @@ angular.module('ikApp').factory('pull', [
         var initialized = false;
 
         function pullData () {
-            $http.get(config.updatePath + config.screenId).then(
+            $http.get(config.updatePath).then(
                 function success (response) {
                     var data = response.data;
 

@@ -1,10 +1,10 @@
-angular.module('screenApp').directive('screenBundlePreviewScreen', [
-    '$timeout', '$translate', function ($timeout, $translate) {
+angular.module('screenApp').directive('screenBundlePreview', [
+    '$timeout', function ($timeout) {
     return {
         restrict: 'E',
         replace: true,
         scope: {
-            screenId: '=',
+            previewUrl: '@',
             close: '&'
         },
         link: function (scope, element, attrs) {
@@ -15,6 +15,6 @@ angular.module('screenApp').directive('screenBundlePreviewScreen', [
                 });
             });
         },
-        templateUrl: '/bundles/os2displayscreen/apps/screenApp/previewScreen/preview-screen.html'
+        templateUrl: '/bundles/os2displayscreen/apps/screenApp/preview/preview.html'
     };
 }]);

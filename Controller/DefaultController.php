@@ -3,9 +3,12 @@
 namespace Os2Display\ScreenBundle\Controller;
 
 use Os2Display\ScreenBundle\Entity\PublicScreen;
+use Os2Display\ScreenBundle\Entity\PublicChannel;
+use Os2Display\CoreBundle\Entity\Channel;
+use Os2Display\CoreBundle\Entity\Screen;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Os2Display\CoreBundle\Entity\Screen;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -14,11 +17,12 @@ class DefaultController extends Controller
     /**
      * Get the url to the public screen.
      *
-     * @param $publicScreen
+     * @param $path
+     * @param $publicUrl
      * @return string
      */
-    private function getPublicUrl($publicScreen) {
-        return $this->getParameter('absolute_path_to_server') . '/screen/public/' . $publicScreen->getPublicUrl();
+    private function getPublicUrl($path, $publicUrl) {
+        return $this->getParameter('absolute_path_to_server') . $path . $publicUrl;
     }
 
     /**
@@ -33,7 +37,7 @@ class DefaultController extends Controller
         $now = new \DateTime();
 
         do {
-            $publicId = substr(sha1($id . $now->getTimestamp()), 0, 6);
+            $publicId = substr(sha1($id . $now->getTimestamp()), 0, 8);
         }
         while (
             is_null($publicId) ||
@@ -59,7 +63,7 @@ class DefaultController extends Controller
 
         return new JsonResponse([
             'screenId' => $screenId,
-            'publicUrl' => $this->getPublicUrl($publicScreen),
+            'publicUrl' => $this->getPublicUrl('/screen/public/', $publicScreen->getPublicUrl()),
             'enabled' => $publicScreen->getEnabled(),
         ]);
     }
@@ -104,9 +108,96 @@ class DefaultController extends Controller
 
         return new JsonResponse([
             'screenId' => $screenId,
-            'publicUrl' => $this->getPublicUrl($publicScreen),
+            'publicUrl' => $this->getPublicUrl('/screen/public/', $publicScreen->getPublicUrl()),
             'enabled' => $publicScreen->getEnabled(),
         ]);
+    }
+
+
+    /**
+     * Get channel publicly available status.
+     *
+     * @param $channelId
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getChannelPubliclyAvailableAction($channelId) {
+        $publicChannel = $this->container->get('doctrine')->getRepository(PublicChannel::class)->findOneByChannel($channelId);
+
+        if (!$publicChannel) {
+            throw new HttpException(404);
+        }
+
+        return new JsonResponse([
+            'channelId' => $channelId,
+            'publicUrl' => $this->getPublicUrl('/screen/public_channel/', $publicChannel->getPublicUrl()),
+            'enabled' => $publicChannel->getEnabled(),
+        ]);
+    }
+
+    /**
+     * Set public available status.
+     */
+    public function setChannelPubliclyAvailableAction(Request $request, $channelId) {
+        // Get json body from the request.
+        $post = json_decode($request->getContent());
+
+        $entityManager = $this->container->get('doctrine')->getEntityManager();
+
+        if (!isset($post->enabled)) {
+            throw new HttpException(400);
+        }
+
+        $enabled = $post->enabled;
+
+        $publicChannel = $entityManager->getRepository(PublicChannel::class)->findOneByChannel($channelId);
+
+        $now = new \DateTime();
+
+        if (!$publicChannel) {
+            $channel = $entityManager->getRepository(Channel::class)->findOneById($channelId);
+
+            $publicChannel = new PublicChannel();
+            $publicChannel->setChannel($channel);
+            $publicChannel->setPublicUrl($this->generatePublicId($channel->getId()));
+            $publicChannel->setCreatedAt($now);
+            $publicChannel->setUser($this->getUser());
+            $publicChannel->setCreatedBy($this->getUser());
+
+            $entityManager->persist($publicChannel);
+        }
+
+        $publicChannel->setUpdatedAt($now);
+        $publicChannel->setEnabled($enabled);
+        $publicChannel->setUpdatedBy($this->getUser());
+
+        $entityManager->flush();
+
+        return new JsonResponse([
+            'channelId' => $channelId,
+            'publicUrl' => $this->getPublicUrl('/screen/public_channel/', $publicChannel->getPublicUrl()),
+            'enabled' => $publicChannel->getEnabled(),
+        ]);
+    }
+
+    /**
+     * Get the current content of a public channel.
+     *
+     * @param $publicChannelId
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getCurrentChannelContentPublicAction($publicChannelId) {
+        $entityManager = $this->container->get('doctrine')->getEntityManager();
+        $publicChannel = $entityManager->getRepository(PublicChannel::class)->findOneByPublicUrl($publicChannelId);
+
+        if (!$publicChannel || !$publicChannel->getEnabled()) {
+            throw new HttpException(400);
+        }
+
+        $channel = $publicChannel->getChannel();
+        $channelId = $channel->getId();
+
+        return $this->getCurrentChannelContentAction($channelId);
     }
 
     /**
@@ -120,7 +211,6 @@ class DefaultController extends Controller
         $publicScreen = $entityManager->getRepository(PublicScreen::class)->findOneByPublicUrl($publicScreenId);
 
         if (!$publicScreen || !$publicScreen->getEnabled()) {
-            // @TODO: Better error page.
             throw new HttpException(400);
         }
 
@@ -143,6 +233,73 @@ class DefaultController extends Controller
     }
 
     /**
+     * Get the current content for a channel placed in a full-screen screen.
+     *
+     * @param $channelId
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function getCurrentChannelContentAction($channelId) {
+        $middlewareService = $this->container->get('os2display.middleware.service');
+
+        return new JsonResponse($middlewareService->getCurrentChannelArray($channelId));
+    }
+
+    /**
+     * Get publicly available channel.
+     *
+     * @param $publicChannelId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function pullPublicChannelAction($publicChannelId) {
+        $entityManager = $this->container->get('doctrine')->getEntityManager();
+        $publicChannel = $entityManager->getRepository(PublicChannel::class)->findOneByPublicUrl($publicChannelId);
+
+        if (!$publicChannel || !$publicChannel->getEnabled()) {
+            return $this->render('Os2DisplaychannelBundle:Default:not_allowed.html.twig');
+        }
+
+        $screenConfig = (object)[
+            'strategy' => 'pull',
+            'updateInterval' => $this->container->getParameter('os2_display_channel.strategies.pull.update_interval'),
+            'updatePath' => '/screen/public/serialized_channel/' . $publicChannelId,
+            'debug' => $this->container->getParameter('os2_display_channel.strategies.pull.debug'),
+            'version' => $this->container->getParameter('version'),
+            'logging' => (object)[
+                'logToConsole' => $this->container->getParameter('os2_display_channel.strategies.pull.log_to_console'),
+                'logLevel' => $this->container->getParameter('os2_display_channel.strategies.pull.log_level'),
+            ]
+        ];
+
+        return $this->render('Os2DisplaychannelBundle:Default:index.html.twig', [
+            'screenConfig' => $screenConfig,
+        ]);
+    }
+
+    /**
+     * Render channel without middleware, but with pull strategy instead.
+     *
+     * @param $channelId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function pullChannelAction($channelId) {
+        $screenConfig = (object)[
+            'strategy' => 'pull',
+            'updateInterval' => $this->container->getParameter('os2_display_screen.strategies.pull.update_interval'),
+            'updatePath' => '/screen/serialized_channel/' . $channelId,
+            'debug' => $this->container->getParameter('os2_display_screen.strategies.pull.debug'),
+            'version' => $this->container->getParameter('version'),
+            'logging' => (object)[
+                'logToConsole' => $this->container->getParameter('os2_display_screen.strategies.pull.log_to_console'),
+                'logLevel' => $this->container->getParameter('os2_display_screen.strategies.pull.log_level'),
+            ]
+        ];
+
+        return $this->render('Os2DisplayScreenBundle:Default:index.html.twig', [
+            'screenConfig' => $screenConfig,
+        ]);
+    }
+
+    /**
      * Get publicly available screen.
      *
      * @param $publicScreenId
@@ -156,14 +313,10 @@ class DefaultController extends Controller
             return $this->render('Os2DisplayScreenBundle:Default:not_allowed.html.twig');
         }
 
-        $screen = $publicScreen->getScreen();
-        $screenId = $screen->getId();
-
         $screenConfig = (object)[
             'strategy' => 'pull',
             'updateInterval' => $this->container->getParameter('os2_display_screen.strategies.pull.update_interval'),
-            'updatePath' => '/screen/public/serialized/',
-            'screenId' => $publicScreenId,
+            'updatePath' => '/screen/public/serialized/' . $publicScreenId,
             'debug' => $this->container->getParameter('os2_display_screen.strategies.pull.debug'),
             'version' => $this->container->getParameter('version'),
             'logging' => (object)[
@@ -188,8 +341,7 @@ class DefaultController extends Controller
         $screenConfig = (object)[
             'strategy' => 'pull',
             'updateInterval' => $this->container->getParameter('os2_display_screen.strategies.pull.update_interval'),
-            'updatePath' => $this->container->getParameter('os2_display_screen.strategies.pull.update_path'),
-            'screenId' => $screenId,
+            'updatePath' => '/screen/serialized/' . $screenId,
             'debug' => $this->container->getParameter('os2_display_screen.strategies.pull.debug'),
             'version' => $this->container->getParameter('version'),
             'logging' => (object)[

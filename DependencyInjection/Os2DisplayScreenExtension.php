@@ -29,7 +29,6 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
                     'debug' => true,
                     'log_to_console' => true,
                     'log_level' => 'all',
-                    'update_path' => '/screen/serialized/',
                     'update_interval' => 60 * 5,   // Every 5 minutes.
                 ],
                 'push' => [
@@ -58,7 +57,6 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
         $container->setParameter('os2_display_screen.strategies.pull.debug', $resultingConfig['strategies']['pull']['debug']);
         $container->setParameter('os2_display_screen.strategies.pull.log_to_console', $resultingConfig['strategies']['pull']['log_to_console']);
         $container->setParameter('os2_display_screen.strategies.pull.log_level', $resultingConfig['strategies']['pull']['log_level']);
-        $container->setParameter('os2_display_screen.strategies.pull.update_path', $resultingConfig['strategies']['pull']['update_path']);
         $container->setParameter('os2_display_screen.strategies.pull.update_interval', $resultingConfig['strategies']['pull']['update_interval']);
 
         $container->setParameter('os2_display_screen.strategies.push.enabled', $resultingConfig['strategies']['push']['enabled']);

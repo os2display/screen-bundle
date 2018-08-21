@@ -46,17 +46,27 @@ angular.module('screenApp').service('screenAppSetup', [
         }
 
         busService.$on('itkHeader.list.element.requestItems', function (event, data) {
-            if (data.type === 'screen') {
+            if (!data) {
+                return;
+            }
+
+            if (data.type === 'screen' || data.type === 'channel') {
                 setupScreenBundleOpenPreview(data);
 
                 var title = $translate.instant('screen.app.start_preview');
+                var html = '<div><a ng-click="screenBundleOpenPreview(' + data.entity.id + ')" class="os2display-screen-bundle--play-icon-active" title="' + title + '"><img class="os2display-screen-bundle--play-icon" src="bundles/os2displayscreen/assets/icons/play.svg"</a>';
+                var previewUrl = '/screen/display' + (data.type === 'channel' ? '_channel' : '') + '/' + data.entity.id;
 
-                var html = '<div><a ng-click="screenBundleOpenPreview(' + data.entity.id + ')" class="os2display-screen-bundle--play-icon-active" title="' + title + '"><img class="os2display-screen-bundle--play-icon" src="bundles/os2displayscreen/assets/icons/play.svg"</a>' +
+                html = html +
                     '<span data-ng-if="screenBundleShowPreview === ' + data.entity.id + '">' +
-                        '<screen-bundle-preview-screen screen-id="' + data.entity.id + '" close="screenBundleClosePreview()"></screen-bundle-preview-screen>' +
+                    '<screen-bundle-preview preview-url="' + previewUrl + '" close="screenBundleClosePreview()"></screen-bundle-preview>' +
                     '</span></div>';
 
-                $http.get('/screen/api/publicly_available/' + data.entity.id).then(
+                busService.$emit(data.returnEvent, {
+                    html: html
+                });
+
+                $http.get('/' +  data.type + '/api/publicly_available/' + data.entity.id).then(
                     function (response) {
                         if (response.data.enabled) {
                             var title = $translate.instant('screen.app.public');
@@ -67,27 +77,29 @@ angular.module('screenApp').service('screenAppSetup', [
                                 html: html
                             });
                         }
-                    },
-                    function (err) {
-                        if (err.status !== 404) {
-                            console.log(err);
-                        }
                     }
                 );
-
-                busService.$emit(data.returnEvent, {
-                    html: html
-                });
             }
         });
 
         // Inject into screen page.
-        busService.$on('itkHeader.screen.extra-fields.requestItems', function (event, data) {
-            if (data.type === 'screen') {
+        busService.$on('itkHeader.settings.extra-fields.requestItems', function (event, data) {
+            if (data.type === 'screen' || data.type === 'channel') {
                 data.scope.screenBundlePublicUrl = null;
                 data.scope.screenBundlePublicEnabled = null;
 
-                $http.get('/screen/api/publicly_available/' + data.entity.id).then(
+                var dataUrl = '';
+                var previewUrl = '/screen/display' + (data.type === 'channel' ? '_channel' : '') + '/' + data.entity.id;
+
+                if (data.type === 'screen') {
+                    dataUrl = '/screen/api/publicly_available/' + data.entity.id;
+                }
+                else {
+                    dataUrl = '/screen/api/publicly_available_channel/' + data.entity.id;
+                }
+
+
+                $http.get(dataUrl).then(
                     function (response) {
                         $timeout(function () {
                                 data.scope.$apply(function () {
@@ -105,7 +117,7 @@ angular.module('screenApp').service('screenAppSetup', [
 
                 if (!data.scope.hasOwnProperty('screenBundleTogglePublicAvailable')) {
                     data.scope.screenBundleTogglePublicAvailable = function () {
-                        $http.post('/screen/api/publicly_available/' + data.entity.id, {
+                        $http.post(dataUrl, {
                             enabled: !data.scope.screenBundlePublicEnabled
                         }).then(
                             function (response) {
@@ -133,7 +145,7 @@ angular.module('screenApp').service('screenAppSetup', [
                             '<label class="cpw--text-label">' + $translate.instant('screen.extra_fields.preview') + '</label>' +
                             '<button class="cpw--add-channels-item-action os2display-screen-bundle--extra-fields-button" data-ng-click="screenBundleOpenPreview(' + data.entity.id + ')">' + $translate.instant('screen.extra_fields.preview_button') + '</button>' +
                             '<span data-ng-if="screenBundleShowPreview === ' + data.entity.id + '">' +
-                                '<screen-bundle-preview-screen screen-id="' + data.entity.id + '" close="screenBundleClosePreview()"></screen-bundle-preview-screen>' +
+                                '<screen-bundle-preview preview-url="' + previewUrl + '" close="screenBundleClosePreview()"></screen-bundle-preview>' +
                             '</span>' +
                         '</div>' +
                         '<div class="cpw--text">' +

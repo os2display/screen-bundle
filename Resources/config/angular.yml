@@ -9,7 +9,7 @@ apps:
     container: false
     files:
       - bundles/os2displayscreen/apps/screenApp/screenApp.js
-      - bundles/os2displayscreen/apps/screenApp/previewScreen/previewScreen.js
+      - bundles/os2displayscreen/apps/screenApp/preview/preview.js
     dependencies:
       - busModule
       - mainModule
