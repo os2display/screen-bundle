@@ -22,7 +22,7 @@ os2display_screen_channel_pull:
 
 # Render publicly available channel.
 os2display_screen_public_channel_pull:
-    path:     /screen/public/channel/{publicChannelId}
+    path:     /screen/public_channel/{publicChannelId}
     defaults: { _controller: Os2DisplayScreenBundle:Default:pullPublicChannel }
 
 
@@ -45,8 +45,8 @@ os2display_screen_public_get_serialized_screen:
 
 # Data array for screen publicly available.
 os2display_channel_public_get_serialized_channel:
-    path:     /channel/public/serialized/{publicChannelId}
-    defaults: { _controller: Os2DisplayChannelBundle:Default:getCurrentChannelContentPublic }
+    path:     /screen/public/serialized_channel/{publicChannelId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:getCurrentChannelContentPublic }
 
 
 ### Get/Setter-routes for screens/channels ###

@@ -157,7 +157,7 @@ angular.module('screenApp').service('screenAppSetup', [
                         '</div>' +
                         '<div class="cpw--text" data-ng-if="screenBundlePublicEnabled && screenBundlePublicUrl">' +
                             '<label class="cpw--text-label">' + $translate.instant('screen.extra_fields.public_url') + '</label>' +
-                            '<input type="text" class="cpw--text-input" readonly="readonly" data-ng-model="screenBundlePublicUrl">' +
+                            '<textarea type="text" class="cpw--text-input" readonly="readonly" data-ng-model="screenBundlePublicUrl">' +
                         '</div>' +
                     '</form>';
 

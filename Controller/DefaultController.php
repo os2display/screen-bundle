@@ -255,22 +255,22 @@ class DefaultController extends Controller
         $publicChannel = $entityManager->getRepository(PublicChannel::class)->findOneByPublicUrl($publicChannelId);
 
         if (!$publicChannel || !$publicChannel->getEnabled()) {
-            return $this->render('Os2DisplaychannelBundle:Default:not_allowed.html.twig');
+            return $this->render('Os2DisplayScreenBundle:Default:not_allowed.html.twig');
         }
 
         $screenConfig = (object)[
             'strategy' => 'pull',
-            'updateInterval' => $this->container->getParameter('os2_display_channel.strategies.pull.update_interval'),
+            'updateInterval' => $this->container->getParameter('os2_display_screen.strategies.pull.update_interval'),
             'updatePath' => '/screen/public/serialized_channel/' . $publicChannelId,
-            'debug' => $this->container->getParameter('os2_display_channel.strategies.pull.debug'),
+            'debug' => $this->container->getParameter('os2_display_screen.strategies.pull.debug'),
             'version' => $this->container->getParameter('version'),
             'logging' => (object)[
-                'logToConsole' => $this->container->getParameter('os2_display_channel.strategies.pull.log_to_console'),
-                'logLevel' => $this->container->getParameter('os2_display_channel.strategies.pull.log_level'),
+                'logToConsole' => $this->container->getParameter('os2_display_screen.strategies.pull.log_to_console'),
+                'logLevel' => $this->container->getParameter('os2_display_screen.strategies.pull.log_level'),
             ]
         ];
 
-        return $this->render('Os2DisplaychannelBundle:Default:index.html.twig', [
+        return $this->render('Os2DisplayScreenBundle:Default:index.html.twig', [
             'screenConfig' => $screenConfig,
         ]);
     }
