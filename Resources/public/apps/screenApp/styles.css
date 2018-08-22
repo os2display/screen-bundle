@@ -59,3 +59,8 @@
 .os2display-screen-bundle--preview-subcontainer-right {
   justify-content: flex-end;
 }
+
+.os2display-screen-bundle--preview-button-text {
+  color: #aaa;
+  margin: 5px;
+}

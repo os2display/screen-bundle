@@ -155,6 +155,7 @@ angular.module('screenApp').service('screenAppSetup', [
                         '<div class="cpw--text">' +
                             '<label class="cpw--text-label">' + $translate.instant('screen.extra_fields.preview') + '</label>' +
                             '<button class="cpw--add-channels-item-action os2display-screen-bundle--extra-fields-button" data-ng-click="screenBundleOpenPreview(' + data.entity.id + ')">' + $translate.instant('screen.extra_fields.preview_button') + '</button>' +
+                            '<p class="os2display-screen-bundle--preview-button-text">' + $translate.instant('screen.extra_fields.preview_text') + '</p>' +
                             '<span data-ng-if="screenBundleShowPreview === ' + data.entity.id + '">' +
                                 '<screen-bundle-preview preview-url="' + previewUrl + '" close="screenBundleClosePreview()"></screen-bundle-preview>' +
                             '</span>' +
