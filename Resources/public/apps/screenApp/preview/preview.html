@@ -2,6 +2,9 @@
   <div class="os2display-screen-bundle--preview-container">
     <button class="cpw--add-channels-item-action os2display-screen-bundle--preview-button" data-ng-click="close()">Luk preview</button>
   </div>
+  <select name="singleSelect" data-ng-model="selectedAspectRatio"
+          data-ng-options="aspectRatio.name for aspectRatio in aspectRatios track by aspectRatio.id">
+  </select>
   <div class="os2display-screen-bundle--preview-container">
     <iframe class="os2display-screen-bundle--preview-iframe" data-ng-src="{{previewUrl}}" frameborder="0" data-ng-style="{'width': width, height: height}"></iframe>
   </div>
