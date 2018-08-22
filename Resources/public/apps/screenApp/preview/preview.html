@@ -1,10 +1,15 @@
 <div class="os2display-screen-bundle--preview">
   <div class="os2display-screen-bundle--preview-container">
-    <button class="cpw--add-channels-item-action os2display-screen-bundle--preview-button" data-ng-click="close()">Luk preview</button>
+    <div class="os2display-screen-bundle--preview-subcontainer"></div>
+    <div class="os2display-screen-bundle--preview-subcontainer">
+      <button class="cpw--add-channels-item-action os2display-screen-bundle--preview-button" data-ng-click="close()">Luk preview</button>
+    </div>
+    <div class="os2display-screen-bundle--preview-subcontainer os2display-screen-bundle--preview-subcontainer-right">
+      <select class="os2display-screen-bundle--select" data-ng-model="selectedAspectRatio"
+              data-ng-options="aspectRatio.name for aspectRatio in aspectRatios track by aspectRatio.id">
+      </select>
+    </div>
   </div>
-  <select name="singleSelect" data-ng-model="selectedAspectRatio"
-          data-ng-options="aspectRatio.name for aspectRatio in aspectRatios track by aspectRatio.id">
-  </select>
   <div class="os2display-screen-bundle--preview-container">
     <iframe class="os2display-screen-bundle--preview-iframe" data-ng-src="{{previewUrl}}" frameborder="0" data-ng-style="{'width': width, height: height}"></iframe>
   </div>

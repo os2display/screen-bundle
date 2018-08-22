@@ -35,6 +35,11 @@
   margin: 20px;
 }
 
+.os2display-screen-bundle--select {
+  margin: 20px;
+  padding: 2px;
+}
+
 .os2display-screen-bundle--preview-iframe {
   margin: 20px;
   background: #ccc;
@@ -42,4 +47,15 @@
 
 .os2display-screen-bundle--extra-fields-button {
   max-width: 200px;
+}
+
+.os2display-screen-bundle--preview-subcontainer {
+  flex: 1;
+  max-width: 400px;
+  display: flex;
+  justify-content: center;
+}
+
+.os2display-screen-bundle--preview-subcontainer-right {
+  justify-content: flex-end;
 }
