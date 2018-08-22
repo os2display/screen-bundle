@@ -130,7 +130,7 @@ class DefaultController extends Controller
 
         return new JsonResponse([
             'channelId' => $channelId,
-            'publicUrl' => $this->getPublicUrl('/screen/public_channel/', $publicChannel->getPublicUrl()),
+            'publicUrl' => $this->getPublicUrl('/screen/public/channel/', $publicChannel->getPublicUrl()),
             'enabled' => $publicChannel->getEnabled(),
         ]);
     }
@@ -175,7 +175,7 @@ class DefaultController extends Controller
 
         return new JsonResponse([
             'channelId' => $channelId,
-            'publicUrl' => $this->getPublicUrl('/screen/public_channel/', $publicChannel->getPublicUrl()),
+            'publicUrl' => $this->getPublicUrl('/screen/public/channel/', $publicChannel->getPublicUrl()),
             'enabled' => $publicChannel->getEnabled(),
         ]);
     }

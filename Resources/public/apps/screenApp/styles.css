@@ -1,15 +1,14 @@
 .os2display-screen-bundle--play-icon {
   width: 30px;
-  position: absolute;
-  top: 0px;
-  left: 10px;
+}
+
+.os2display-screen-bundle--icon-container {
+  width: 30px;
+  height: 30px;
 }
 
 .os2display-screen-bundle--unlocked-icon {
   width: 20px;
-  position: absolute;
-  top: 30px;
-  left: 15px;
 }
 
 .os2display-screen-bundle--preview {
@@ -37,6 +36,7 @@
 
 .os2display-screen-bundle--preview-iframe {
   margin: 20px;
+  background: #ccc;
 }
 
 .os2display-screen-bundle--extra-fields-button {

@@ -22,7 +22,7 @@ os2display_screen_channel_pull:
 
 # Render publicly available channel.
 os2display_screen_public_channel_pull:
-    path:     /screen/public_channel/{publicChannelId}
+    path:     /screen/public/channel/{publicChannelId}
     defaults: { _controller: Os2DisplayScreenBundle:Default:pullPublicChannel }
 
 

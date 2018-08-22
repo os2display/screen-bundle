@@ -53,8 +53,15 @@ angular.module('screenApp').service('screenAppSetup', [
             if (data.type === 'screen' || data.type === 'channel') {
                 setupScreenBundleOpenPreview(data);
 
-                var title = $translate.instant('screen.app.start_preview');
-                var html = '<div><a ng-click="screenBundleOpenPreview(' + data.entity.id + ')" class="os2display-screen-bundle--play-icon-active" title="' + title + '"><img class="os2display-screen-bundle--play-icon" src="bundles/os2displayscreen/assets/icons/play.svg"</a>';
+                var message = $translate.instant('screen.app.start_preview');
+                var iconSource = 'bundles/os2displayscreen/assets/icons/play.svg';
+                var html =
+                    '  <div tooltips tooltip-template="' + message + '" tooltip-side="top">' +
+                    '    <a ng-click="screenBundleOpenPreview(' + data.entity.id + ')" class="os2display-screen-bundle--play-icon-active">' +
+                    '       <img class="os2display-screen-bundle--play-icon" src="' + iconSource + '"/>' +
+                    '    </a>' +
+                    '  </div>';
+
                 var previewUrl = '/screen/display' + (data.type === 'channel' ? '_channel' : '') + '/' + data.entity.id;
 
                 html = html +
@@ -66,12 +73,16 @@ angular.module('screenApp').service('screenAppSetup', [
                     html: html
                 });
 
-                $http.get('/' +  data.type + '/api/publicly_available/' + data.entity.id).then(
+                $http.get('/screen/api/publicly_available' + (data.type === 'channel' ? '_channel' : '') + '/' + data.entity.id).then(
                     function (response) {
                         if (response.data.enabled) {
-                            var title = $translate.instant('screen.app.public');
+                            var message = $translate.instant('screen.app.public');
+                            var iconSource = 'bundles/os2displayscreen/assets/icons/public.svg';
 
-                            var html = '<div><img class="os2display-screen-bundle--unlocked-icon" src="bundles/os2displayscreen/assets/icons/public.svg" title="' + title + '"/></div>';
+                            var html =
+                            '  <div tooltips tooltip-template="' + message + '" tooltip-side="top">' +
+                            '    <div class="os2display-screen-bundle--icon-container"><img class="os2display-screen-bundle--unlocked-icon" src="' + iconSource + '"></div>' +
+                            '  </div>';
 
                             busService.$emit(data.returnEvent, {
                                 html: html
