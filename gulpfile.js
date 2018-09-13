@@ -27,6 +27,10 @@ var jsAssetPaths = [
 ];
 var adminBuildDir = 'Resources/public/assets/build';
 
+var jsAdminPaths = [
+  'Resources/public/apps/**/**/**/*.js'
+];
+
 /**
  * Run Javascript through JSHint.
  */
@@ -46,7 +50,15 @@ gulp.task('js', function () {
     .pipe(uglify())
     .pipe(rename({extname: ".min.js"}))
     .pipe(header(banner, { pkg : pkg } ))
-    .pipe(gulp.dest(adminBuildDir))
+    .pipe(gulp.dest(adminBuildDir));
+
+  gulp.src(jsAdminPaths)
+  .pipe(concat('os2displayscreen.js'))
+  .pipe(ngAnnotate())
+  .pipe(uglify())
+  .pipe(rename({extname: ".min.js"}))
+  .pipe(header(banner, { pkg : pkg } ))
+  .pipe(gulp.dest(adminBuildDir));
 });
 
 /**
