@@ -1,0 +1,25 @@
+assets:
+  css:
+    - bundles/os2displayscreen/apps/screenApp/styles.css
+  js_prod:
+    - bundles/os2displayscreen/assets/build/os2displayscreen.min.js
+
+apps:
+  screenApp:
+    container: false
+    files:
+      - bundles/os2displayscreen/apps/screenApp/screenApp.js
+      - bundles/os2displayscreen/apps/screenApp/preview/preview.js
+    dependencies:
+      - busModule
+      - mainModule
+      - pascalprecht.translate
+  ikApp:
+    dependencies:
+      - screenApp
+
+bootstrap:
+  modules:
+    - screenApp
+  services:
+    - screenAppSetup

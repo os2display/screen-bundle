@@ -1,0 +1,76 @@
+### Screen rendering routes ###
+
+# Middleware (Push) based.
+os2display_screen_push:
+    path:     /screen
+    defaults: { _controller: Os2DisplayScreenBundle:Default:push }
+
+# Pull based.
+os2display_screen_pull:
+    path:     /screen/display/{screenId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:pull }
+
+# Render publicly available screen.
+os2display_screen_public_pull:
+    path:     /screen/public/{publicScreenId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:pullPublicScreen }
+
+# Render channel in full-screen template.
+os2display_screen_channel_pull:
+    path:     /screen/display_channel/{channelId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:pullChannel }
+
+# Render publicly available channel.
+os2display_screen_public_channel_pull:
+    path:     /screen/public/channel/{publicChannelId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:pullPublicChannel }
+
+
+### Data array routes ###
+
+# Data array for screen.
+os2display_get_serialized_screen:
+    path:     /screen/serialized/{screenId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:getCurrentScreenContent }
+
+# Data array for data.
+os2display_screen_get_serialized_channel:
+    path:     /screen/serialized_channel/{channelId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:getCurrentChannelContent }
+
+# Data array for screen publicly available.
+os2display_screen_public_get_serialized_screen:
+    path:     /screen/public/serialized/{publicScreenId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:getCurrentScreenContentPublic }
+
+# Data array for screen publicly available.
+os2display_channel_public_get_serialized_channel:
+    path:     /screen/public/serialized_channel/{publicChannelId}
+    defaults: { _controller: Os2DisplayScreenBundle:Default:getCurrentChannelContentPublic }
+
+
+### Get/Setter-routes for screens/channels ###
+
+# Get screen publicly available.
+os2display_screen_publicly_available_get:
+    path:     /screen/api/publicly_available/{screenId}
+    methods: ['GET']
+    defaults: { _controller: Os2DisplayScreenBundle:Default:getScreenPubliclyAvailable }
+
+# Set screen publicly available.
+os2display_screen_publicly_available_set:
+    path:     /screen/api/publicly_available/{screenId}
+    methods: ['POST']
+    defaults: { _controller: Os2DisplayScreenBundle:Default:setScreenPubliclyAvailable }
+
+# Get channel publicly available.
+os2display_screen_publicly_available_channel_get:
+    path:     /screen/api/publicly_available_channel/{channelId}
+    methods: ['GET']
+    defaults: { _controller: Os2DisplayScreenBundle:Default:getChannelPubliclyAvailable }
+
+# Set channel publicly available.
+os2display_screen_publicly_available_channel_set:
+    path:     /screen/api/publicly_available_channel/{channelId}
+    methods: ['POST']
+    defaults: { _controller: Os2DisplayScreenBundle:Default:setChannelPubliclyAvailable }

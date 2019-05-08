@@ -1,0 +1,18 @@
+{
+  "screen": {
+    "extra_fields": {
+      "activation_code": "Aktiveringskode",
+      "publicly_available": "Offentligt tilgængelighed",
+      "public_url": "Offentlig sti til afspilning",
+      "publicly_available_toggle_disabled": "Gør offentlig",
+      "publicly_available_toggle_enabled": "Fjern offentliggørelse",
+      "preview": "Preview",
+      "preview_button": "Vis preview",
+      "preview_text": "Bemærk: Preview viser kun senest gemte udgave."
+    },
+    "app": {
+      "start_preview": "Vis preview",
+      "public": "Offentligt tilgængelig"
+    }
+  }
+}

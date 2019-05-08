@@ -1,0 +1,56 @@
+<html data-ng-app="ikApp">
+<head>
+  <title>OS2Display</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <link rel="stylesheet" href="{{ asset('bundles/os2displayscreen/assets/css/styles.css') }}">
+
+  <script type="text/javascript">
+      window.config = {{ screenConfig | json_encode() | raw }};
+  </script>
+
+  {% if app.environment == 'prod' %}
+    <script src="{{ asset('bundles/os2displayscreen/assets/build/assets.min.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/assets/build/app.min.js') }}"></script>
+  {% else %}
+    <script src="{{ asset('bundles/os2displayscreen/assets/lib/jquery-1.11.1.min.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/assets/lib/angular.min.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/assets/lib/angular-animate.min.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/assets/lib/angular-css-injector-1.0.4.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/assets/lib/angular-sanitize.min.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/assets/lib/locale_da.js') }}"></script>
+
+    <script src="{{ asset('bundles/os2displayscreen/app/app.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/logging.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/indexController.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/dateComponent.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/digitalClockComponent.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/keypress.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/activeEvents.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/region.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/slide.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/socket.js') }}"></script>
+    <script src="{{ asset('bundles/os2displayscreen/app/pull.js') }}"></script>
+  {% endif %}
+
+  {# Initialize the relevant strategy #}
+  <script type="text/javascript">
+      {% if screenConfig.strategy == 'pull' %}
+          angular.module('ikApp').run(['pull', angular.noop]);
+      {% else %}
+          {# Default: 'push' strategy #}
+          angular.module('ikApp').run(['socket', angular.noop]);
+      {% endif %}
+  </script>
+</head>
+<body data-ng-controller="IndexController" data-itk-keypress="logout()" data-key="73" data-modifier="17">
+  <div class="fallback-image"
+       data-ng-show="displayFallbackImage"
+       data-ng-style="{'background-image': 'url(' + fallbackImageUrl + ')'}">
+  </div>
+  <div class="content" data-ng-include="template"></div>
+</body>
+</html>
