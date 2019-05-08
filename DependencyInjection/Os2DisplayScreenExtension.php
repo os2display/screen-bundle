@@ -32,7 +32,7 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
                     'update_interval' => 60 * 5,   // Every 5 minutes.
                 ],
                 'push' => [
-                    'enabled' => false,
+                    'enabled' => true,
                     'debug' => true,
                     'log_to_console' => true,
                     'log_level' => 'all',
