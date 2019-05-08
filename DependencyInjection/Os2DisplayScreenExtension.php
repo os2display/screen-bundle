@@ -37,11 +37,11 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
                     'log_to_console' => true,
                     'log_level' => 'all',
                     'resource' => [
-                        'server' => '//admin.os2display.vm/',
+                        'server' => '%absolute_path_to_server%/',
                         'uri' => 'middleware',
                     ],
                     'ws' => [
-                        'server' => 'https://screen.os2display.vm/',
+                        'server' => '%middleware_host%',
                     ],
                     'apikey' => '',
                     'cookie' => [
