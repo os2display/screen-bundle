@@ -1,5 +1,10 @@
 # os2display/screen-bundle
 
+## 1.0.3
+
+* Added fakeOffline.js.
+* Fixed gulp setup.
+
 ## 1.0.2
 
 * Fixed license.
