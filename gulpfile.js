@@ -17,6 +17,7 @@ var banner = ['/**',
 
 // We only want to process our own non-processed JavaScript files.
 var jsPaths = [
+  'Resources/public/app/fakeOffline.js',
   'Resources/public/app/app.js',
   'Resources/public/app/*.js'
 ];
@@ -43,7 +44,7 @@ gulp.task('jshint', function() {
 /**
  * Build single app.js file.
  */
-gulp.task('js', function () {
+gulp.task('js', function (done) {
   gulp.src(jsPaths)
     .pipe(concat('app.js'))
     .pipe(ngAnnotate())
@@ -59,24 +60,20 @@ gulp.task('js', function () {
   .pipe(rename({extname: ".min.js"}))
   .pipe(header(banner, { pkg : pkg } ))
   .pipe(gulp.dest(adminBuildDir));
+
+  done();
 });
 
 /**
  * Build single assets.js file.
  */
-gulp.task('assets', function () {
+gulp.task('assets', function (done) {
   gulp.src(jsAssetPaths)
     .pipe(concat('assets.js'))
     .pipe(ngAnnotate())
     .pipe(uglify())
     .pipe(rename({extname: ".min.js"}))
-    .pipe(gulp.dest(adminBuildDir))
-});
+    .pipe(gulp.dest(adminBuildDir));
 
-/**
- * Watch files for changes and run tasks.
- */
-gulp.task('default', function() {
-  gulp.watch(jsPaths, ['js']);
-  gulp.watch(jsAssetPaths, ['assets']);
+  done();
 });
