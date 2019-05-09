@@ -1,7 +1,18 @@
 # OS2Display screen-bundle
+
 Bundle to add a screen frontend to the administration.
 
+## Description
+
+This bundle adds screen as a bundle to the administration. Furthermore, it adds a new pull strategy to the frontend, where a middleware is not needed.
+If this strategy is chosen the options to reload the screen from the adminstration are lost.
+
+By moving the screen into the adminstration the possibility of a preview of screens and channels in the administration has been added.
+
+There is also a possibility of making public channels/screens that have a public url. This url can be opened by multiple browsers and uses the pull strategi.
+
 ## Configuration
+
 Add the following to routing.yml:
 
 <pre>
@@ -75,3 +86,23 @@ os2_display_screen:
             cookie:
                 secure: false
 </pre>
+
+## Images of functionality
+
+This same functions are available for screens as for channels.
+
+Edit channel:
+
+![alt text](readme/channel_edit.png "Channel edit")
+
+Publicly available channel:
+
+![alt text](readme/channel_edit2.png "Channel public")
+
+New buttons added to overview:
+
+![alt text](readme/channel_overview.png "Channel overview")
+
+Preview:
+
+![alt text](readme/preview.png "Preview in administraion")
