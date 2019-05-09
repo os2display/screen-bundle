@@ -26,16 +26,16 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
             'strategies' => [
                 'pull' => [
                     'enabled' => true,
-                    'debug' => true,
-                    'log_to_console' => true,
-                    'log_level' => 'all',
-                    'update_interval' => 60 * 5,   // Every 5 minutes.
+                    'debug' => false,
+                    'log_to_console' => false,
+                    'log_level' => 'error',
+                    'update_interval' => 60 * 5,
                 ],
                 'push' => [
                     'enabled' => true,
-                    'debug' => true,
-                    'log_to_console' => true,
-                    'log_level' => 'all',
+                    'debug' => false,
+                    'log_to_console' => false,
+                    'log_level' => 'error',
                     'resource' => [
                         'server' => '%absolute_path_to_server%/',
                         'uri' => 'middleware',
@@ -43,7 +43,7 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
                     'ws' => [
                         'server' => '%middleware_host%',
                     ],
-                    'apikey' => '',
+                    'apikey' => '%middleware_apikey%',
                     'cookie' => [
                         'secure' => false,
                     ],
