@@ -59,7 +59,7 @@ Distribute the url.
 
 ## Configuration reference
 
-These are the default config values.
+These are the default config values (config.yml).
 
 <pre>
 os2_display_screen:
@@ -85,6 +85,23 @@ os2_display_screen:
             apikey: ''
             cookie:
                 secure: false
+</pre>
+
+## Develop config
+
+To enable debug information in develop mode, add the following to config_dev.yml.
+
+<pre>
+os2_display_screen:
+    strategies:
+        pull:
+            debug: true
+            log_to_console: true
+            log_level: all
+        push:
+            debug: true
+            log_to_console: true
+            log_level: all
 </pre>
 
 ## Images of functionality
