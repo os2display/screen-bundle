@@ -1,7 +1,7 @@
 {
     "name": "os2display/screen-bundle",
     "description": "Os2Display screen",
-    "license": "GNU General Public License v3.0",
+    "license": "MPL-2.0",
     "type": "symfony-bundle",
     "autoload": {
         "psr-4": {

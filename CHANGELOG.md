@@ -1,5 +1,9 @@
 # os2display/screen-bundle
 
+## 1.0.5
+
+* Fixed composer.json license.
+
 ## 1.0.4
 
 * Updated readme.
