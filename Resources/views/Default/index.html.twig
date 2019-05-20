@@ -53,5 +53,14 @@
        data-ng-style="{'background-image': 'url(' + fallbackImageUrl + ')'}">
   </div>
   <div class="content" data-ng-include="template"></div>
+
+  <script type="text/javascript">
+    // Warn that Internet Explorer is not a supported browser.
+    // https://stackoverflow.com/a/9851769
+    var isIE = /*@cc_on!@*/false || !!document.documentMode;
+    if (isIE) {
+      $('body').text('Internet Explorer is not supported. Please use an updated, secure browser.')
+    }
+  </script>
 </body>
 </html>
