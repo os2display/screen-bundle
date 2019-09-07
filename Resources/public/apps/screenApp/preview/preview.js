@@ -26,23 +26,25 @@ angular.module('screenApp').directive('screenBundlePreview', [
                     scope.sWidth = scope.selectedAspectRatio.w;
                     scope.sHeight = scope.selectedAspectRatio.h;
 
-                    var width = 0;
+                    var chosenSize = null;
 
                     if (scope.selectedAspectRatio.id === 0) {
-                        width = Math.min($window.innerWidth - 2 * 20, 1200);
+                        chosenSize = 1200;
                     }
                     else {
-                        width = Math.min($window.innerWidth - 2 * 20, 675);
+                        chosenSize = 675;
                     }
+
+                    var width = Math.min($window.innerWidth - 2 * 20, chosenSize);
 
                     scope.scale = width / scope.sWidth;
 
-                    if ($window.innerWidth <= 1200) {
+                    if ($window.innerWidth <= chosenSize) {
                         scope.margin = null;
                     }
                     else {
-                        var leftMargin = Math.max(40, ($window.innerWidth - width) / 2);
-                        scope.margin = '0 ' + leftMargin + 'px';                  }
+                        scope.margin = '0 ' + Math.max(40, ($window.innerWidth - width) / 2) + 'px';
+                    }
                 });
             }
 
