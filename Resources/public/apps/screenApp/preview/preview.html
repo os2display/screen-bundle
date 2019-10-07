@@ -11,6 +11,16 @@
     </div>
   </div>
   <div class="os2display-screen-bundle--preview-container">
-    <iframe class="os2display-screen-bundle--preview-iframe" data-ng-src="{{previewUrl}}" frameborder="0" data-ng-style="{'width': width, height: height}"></iframe>
+    <div style="width: 100%; height: 100%;">
+      <iframe class="os2display-screen-bundle--preview-iframe" data-ng-src="{{previewUrl}}" frameborder="0"
+              ng-style="{
+                'width': sWidth + 'px',
+                'height': sHeight + 'px',
+                'transform': 'scale(' + scale + ')',
+                'transformOrigin': transformOrigin,
+                'margin': margin
+              }"
+      ></iframe>
+    </div>
   </div>
 </div>
