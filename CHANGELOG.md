@@ -1,5 +1,9 @@
 # os2display/screen-bundle
 
+## 1.1.0
+
+* Changed how preview is rendered.
+
 ## 1.0.6
 
 * Added IE warning.
