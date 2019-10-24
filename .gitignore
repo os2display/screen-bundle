@@ -2,5 +2,4 @@
 .DS_Store
 *.pid
 .idea
-assets/images/fallback_override.png
 node_modules/

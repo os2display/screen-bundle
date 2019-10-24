@@ -52,7 +52,7 @@ angular.module('ikApp', [
     function disappearCursor() {
         mouseTimer = null;
 
-        document.body.style.cursor = 'url(/assets/images/trans.gif),none';
+        document.body.style.cursor = 'url(/bundles/os2displayscreen/assets/images/trans.gif),none';
         cursorVisible = false;
     }
 
