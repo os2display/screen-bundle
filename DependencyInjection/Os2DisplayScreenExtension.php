@@ -47,7 +47,7 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
                     'cookie' => [
                         'secure' => false,
                     ],
-                    'fallback_image' => '/bundles/os2displayscreen/assets/images/fallback_default.png'
+                    'fallback_image' => './bundles/os2displayscreen/assets/images/fallback_default.png'
                 ],
             ],
         ];
