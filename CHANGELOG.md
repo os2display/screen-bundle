@@ -1,5 +1,9 @@
 # os2display/screen-bundle
 
+## 1.1.2
+
+* Minified js.
+
 ## 1.1.1
 
 * Fixed fallback config.
