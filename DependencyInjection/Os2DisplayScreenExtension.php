@@ -47,6 +47,7 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
                     'cookie' => [
                         'secure' => false,
                     ],
+                    'fallback_image' => '/bundles/os2displayscreen/assets/images/fallback_default.png'
                 ],
             ],
         ];
@@ -58,6 +59,7 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
         $container->setParameter('os2_display_screen.strategies.pull.log_to_console', $resultingConfig['strategies']['pull']['log_to_console']);
         $container->setParameter('os2_display_screen.strategies.pull.log_level', $resultingConfig['strategies']['pull']['log_level']);
         $container->setParameter('os2_display_screen.strategies.pull.update_interval', $resultingConfig['strategies']['pull']['update_interval']);
+        $container->setParameter('os2_display_screen.strategies.pull.fallback_image', $resultingConfig['strategies']['pull']['fallback_image']);
 
         $container->setParameter('os2_display_screen.strategies.push.enabled', $resultingConfig['strategies']['push']['enabled']);
         $container->setParameter('os2_display_screen.strategies.push.debug', $resultingConfig['strategies']['push']['debug']);
@@ -67,5 +69,6 @@ class Os2DisplayScreenExtension extends Os2DisplayBaseExtension {
         $container->setParameter('os2_display_screen.strategies.push.resource.uri', $resultingConfig['strategies']['push']['resource']['uri']);
         $container->setParameter('os2_display_screen.strategies.push.ws.server', $resultingConfig['strategies']['push']['ws']['server']);
         $container->setParameter('os2_display_screen.strategies.push.cookie.secure', $resultingConfig['strategies']['push']['cookie']['secure']);
+        $container->setParameter('os2_display_screen.strategies.push.fallback_image', $resultingConfig['strategies']['push']['fallback_image']);
     }
 }

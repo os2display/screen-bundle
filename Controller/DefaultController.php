@@ -267,7 +267,8 @@ class DefaultController extends Controller
             'logging' => (object)[
                 'logToConsole' => $this->container->getParameter('os2_display_screen.strategies.pull.log_to_console'),
                 'logLevel' => $this->container->getParameter('os2_display_screen.strategies.pull.log_level'),
-            ]
+            ],
+            'fallback_image' => $this->container->getParameter('os2_display_screen.strategies.pull.fallback_image'),
         ];
 
         return $this->render('Os2DisplayScreenBundle:Default:index.html.twig', [
@@ -291,7 +292,8 @@ class DefaultController extends Controller
             'logging' => (object)[
                 'logToConsole' => $this->container->getParameter('os2_display_screen.strategies.pull.log_to_console'),
                 'logLevel' => $this->container->getParameter('os2_display_screen.strategies.pull.log_level'),
-            ]
+            ],
+            'fallback_image' => $this->container->getParameter('os2_display_screen.strategies.pull.fallback_image'),
         ];
 
         return $this->render('Os2DisplayScreenBundle:Default:index.html.twig', [
@@ -322,7 +324,8 @@ class DefaultController extends Controller
             'logging' => (object)[
                 'logToConsole' => $this->container->getParameter('os2_display_screen.strategies.pull.log_to_console'),
                 'logLevel' => $this->container->getParameter('os2_display_screen.strategies.pull.log_level'),
-            ]
+            ],
+            'fallback_image' => $this->container->getParameter('os2_display_screen.strategies.pull.fallback_image'),
         ];
 
         return $this->render('Os2DisplayScreenBundle:Default:index.html.twig', [
@@ -347,7 +350,8 @@ class DefaultController extends Controller
             'logging' => (object)[
                 'logToConsole' => $this->container->getParameter('os2_display_screen.strategies.pull.log_to_console'),
                 'logLevel' => $this->container->getParameter('os2_display_screen.strategies.pull.log_level'),
-            ]
+            ],
+            'fallback_image' => $this->container->getParameter('os2_display_screen.strategies.pull.fallback_image'),
         ];
 
         return $this->render('Os2DisplayScreenBundle:Default:index.html.twig', [
@@ -380,7 +384,8 @@ class DefaultController extends Controller
             'logging' => (object)[
                 'logToConsole' => $this->container->getParameter('os2_display_screen.strategies.push.log_to_console'),
                 'logLevel' => $this->container->getParameter('os2_display_screen.strategies.push.log_level'),
-            ]
+            ],
+            'fallback_image' => $this->container->getParameter('os2_display_screen.strategies.push.fallback_image'),
         ];
 
         return $this->render('Os2DisplayScreenBundle:Default:index.html.twig', [
