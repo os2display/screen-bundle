@@ -1,5 +1,10 @@
 # os2display/screen-bundle
 
+## 1.1.1
+
+* Fixed fallback config.
+* Added route with /
+
 ## 1.1.0
 
 * Changed how preview is rendered.
