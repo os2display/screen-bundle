@@ -58,7 +58,11 @@ class DefaultController extends Controller
         $publicScreen = $this->container->get('doctrine')->getRepository(PublicScreen::class)->findOneByScreen($screenId);
 
         if (!$publicScreen) {
-            throw new HttpException(404);
+            return new JsonResponse([
+                'screenId' => $screenId,
+                'publicUrl' => '',
+                'enabled' => false,
+            ]);
         }
 
         return new JsonResponse([
@@ -125,7 +129,11 @@ class DefaultController extends Controller
         $publicChannel = $this->container->get('doctrine')->getRepository(PublicChannel::class)->findOneByChannel($channelId);
 
         if (!$publicChannel) {
-            throw new HttpException(404);
+            return new JsonResponse([
+                'channelId' => $channelId,
+                'publicUrl' => '',
+                'enabled' => false,
+            ]);
         }
 
         return new JsonResponse([
