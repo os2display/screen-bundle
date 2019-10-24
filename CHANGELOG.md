@@ -1,5 +1,9 @@
 # os2display/screen-bundle
 
+## 1.1.3
+
+* Handle exception.
+
 ## 1.1.2
 
 * Minified js.
