@@ -16,19 +16,24 @@ angular.module('ikApp', [
     'angular.css.injector'
   ]
 ).config(function ($sceDelegateProvider) {
-    'use strict';
+  'use strict';
 
-    // The administration interface and the client code do not run on the same
-    // domain/sub-domain hence we need to white-list the domains to load slide
-    // templates and CSS form the administration domain.
-    $sceDelegateProvider.resourceUrlWhitelist([
-      // Allow same origin resource loads.
-      'self',
-      // Allow loading from outer templates domain.
-      '**'
-    ]);
-  }
-).config(function ($provide) {
+  // The administration interface and the client code do not run on the same
+  // domain/sub-domain hence we need to white-list the domains to load slide
+  // templates and CSS form the administration domain.
+  $sceDelegateProvider.resourceUrlWhitelist([
+    // Allow same origin resource loads.
+    'self',
+    // Allow loading from outer templates domain.
+    '**'
+  ]);
+}).config(function($animateProvider) {
+  'use strict';
+
+  // Add option to disable ng-animate for an element by adding the class
+  // "ng-animate-disabled".
+  $animateProvider.classNameFilter(/^(?:(?!ng-animate-disabled).)*$/);
+}).config(function ($provide) {
   'use strict';
 
   $provide.decorator("$exceptionHandler", ['$delegate', '$injector',
