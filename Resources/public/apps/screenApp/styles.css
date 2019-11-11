@@ -43,6 +43,7 @@
 .os2display-screen-bundle--preview-iframe {
   margin: 20px;
   background: #ccc;
+  box-shadow: rgba(0, 0, 0, 0.16) 0 0 16px;
 }
 
 .os2display-screen-bundle--extra-fields-button {
