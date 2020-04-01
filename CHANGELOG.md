@@ -1,5 +1,9 @@
 # os2display/screen-bundle
 
+## 1.1.5
+
+* Merged PR https://github.com/os2display/screen-bundle/pull/7: Added event subscriber to protect public channels from cleanup.
+
 ## 1.1.4
 
 * Merged PR https://github.com/os2display/screen-bundle/pull/6: Added optional class to disable ng-animate for an element.
