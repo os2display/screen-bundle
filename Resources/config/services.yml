@@ -1,1 +1,7 @@
 services:
+    os2display.screen.subscriber.cleanup:
+        class: Os2Display\ScreenBundle\Event\CleanupSubscriber
+        arguments:
+            - '@doctrine.orm.entity_manager'
+        tags:
+            - { name: kernel.event_subscriber }
