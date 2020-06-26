@@ -1,8 +1,8 @@
-<div class="os2display-screen-bundle--preview">
+<div class="os2display-screen-bundle--preview bootstrap">
   <div class="os2display-screen-bundle--preview-container">
     <div class="os2display-screen-bundle--preview-subcontainer"></div>
     <div class="os2display-screen-bundle--preview-subcontainer">
-      <button class="cpw--add-channels-item-action os2display-screen-bundle--preview-button" data-ng-click="close()">Luk preview</button>
+      <button class="cpw--add-channels-item-action os2display-screen-bundle--preview-button" data-ng-click="close()">{{ 'screen.preview.close' | translate }}</button>
     </div>
     <div class="os2display-screen-bundle--preview-subcontainer os2display-screen-bundle--preview-subcontainer-right">
       <select class="os2display-screen-bundle--select" data-ng-model="selectedAspectRatio"
@@ -21,6 +21,11 @@
                 'margin': margin
               }"
       ></iframe>
+      <div class="bootstrap" style="position: fixed; bottom: 0; width: 100%; padding: 1em 1em 0;">
+        <div class="alert alert-info" role="alert">
+          {{ 'screen.preview.information' | translate }}
+        </div>
+      </div>
     </div>
   </div>
 </div>

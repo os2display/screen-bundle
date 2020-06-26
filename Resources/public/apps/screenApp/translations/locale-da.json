@@ -13,6 +13,10 @@
     "app": {
       "start_preview": "Vis preview",
       "public": "Offentligt tilgængelig"
+    },
+    "preview": {
+      "close": "Luk preview",
+      "information": "Vær opmærksom på, at previewet herunder ikke nødvendigvis er retvisende for, hvad du kan se på skærmen."
     }
   }
 }
