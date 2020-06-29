@@ -1,5 +1,9 @@
 # os2display/screen-bundle
 
+## 1.1.6
+
+* Merged PR https://github.com/os2display/screen-bundle/pull/8: Added informational message to preview screen.
+
 ## 1.1.5
 
 * Merged PR https://github.com/os2display/screen-bundle/pull/7: Added event subscriber to protect public channels from cleanup.
