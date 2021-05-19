@@ -169,7 +169,7 @@
    */
   Region.prototype.isChannelScheduled = function isChannelScheduled(channel) {
     // If no schedule repeat is set, it should be shown all the time.
-    if (!channel.schedule_repeat) {
+    if (!channel.schedule_repeat) {
       return true;
     }
 
@@ -181,22 +181,29 @@
     var hourTo = channel.schedule_repeat_to;
     var days = channel.schedule_repeat_days;
 
-    // If all 3 parameters are not set return.
-    if (!hourFrom && !hourTo && days.length === 0) {
+    if (days.length === 0) {
       return true;
     }
 
+    if (hourFrom === undefined || hourFrom === null) {
+      hourFrom = 0;
+    }
+
+    if (hourTo === undefined || hourTo === null) {
+      hourTo = 24;
+    }
+
     // Should it be shown today?
-    var repeatToday = false;
+    var showToday = false;
     for (var i = 0; i < days.length; i++) {
       if (days[i].id === nowDay) {
-        repeatToday = true;
+        showToday = true;
         break;
       }
     }
 
     // Is it within scheduled hours?
-    if (repeatToday) {
+    if (showToday) {
       if (hourFrom > hourTo) {
         return false;
       }
