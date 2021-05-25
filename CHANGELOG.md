@@ -1,5 +1,9 @@
 # os2display/screen-bundle
 
+## 1.1.7
+
+* Merged PR https://github.com/os2display/screen-bundle/pull/14: Fixed issue with channel scheduling
+
 ## 1.1.6
 
 * Merged PR https://github.com/os2display/screen-bundle/pull/8: Added informational message to preview screen.
